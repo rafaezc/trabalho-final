@@ -21,3 +21,14 @@ Route::get('users', function () {
     return view('users');
 });
 
+Route::get('patient', function () {
+    return view('patient');
+});
+
+Route::get('tests', function () {
+    return view('tests');
+});
+
+Route::get('calendar', function () {
+    return view('calendar');
+});
