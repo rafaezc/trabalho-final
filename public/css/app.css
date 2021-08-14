@@ -1,0 +1,10 @@
+.fundo {
+    background-color: brown;
+    text-align: right;
+}
+
+.btn-right {
+    display: flex;
+    position: relative;
+    float: right;
+}
