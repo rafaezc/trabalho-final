@@ -1,3 +1,4 @@
+/* mudar o nome dessa classe */
 .fundo {
     background-color: brown;
     text-align: right;
@@ -8,3 +9,70 @@
     position: relative;
     float: right;
 }
+
+.modal-content { 
+    -webkit-box-shadow: 2px 2px 3px 1px #8d8d8d;
+    box-shadow: 2px 2px 3px 1px #8d8d8d;
+    border: none;
+}
+
+.btn-close:hover {
+    color: #302c2c;
+    text-shadow: 0 1px 0 #302c2c;
+    background-color: #f5f5f5;
+    font-weight: 700;
+    padding: 0.1rem 0.3rem;
+}
+
+.btn-close {
+    color: #f5f5f5;
+    text-shadow: 0 1px 0 #f5f5f5;
+    background-color: #302c2c;
+    font-weight: 700;
+    padding: 0.1rem 0.3rem;
+}
+
+.modal-title {
+    color: #f5f5f5;
+}
+
+.modal-header {
+    padding: 0.5rem 1rem;
+    background-color: #302c2c;
+    border-bottom: 1px solid #999999;
+}
+
+.modal-body {
+    background-color: #d4d4d4;
+}
+
+.modal-footer {
+    padding: 0.5rem 1rem;
+    background-color: #d4d4d4;
+    border-top: 1px solid #999999;
+}
+
+.btn-modal {
+    padding: 0.2rem 0.5rem;
+}
+
+.form-group {
+    font-weight: 700;
+}
+
+.form-control {
+    border: 1px solid #9c9c9c;
+}
+
+.delete-warning {
+    font-weight: 600;
+}
+
+.active {
+    color: #ddd;
+    background-color: darkblue !important;
+}
+
+/* .modal-body {
+    overflow-y: auto !important;
+} */

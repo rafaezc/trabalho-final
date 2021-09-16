@@ -17,9 +17,19 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('users', function () {
-    return view('users');
-});
+// Route::post('users', function () {
+//     if (Request::ajax()) {
+//         return view('users');
+//     }
+// });
+
+Route::resource('users', 'UsuarioController');
+
+Route::delete('users', 'UsuarioController@destroy')->name('users.destroy');
+
+Route::put('users/update', 'UsuarioController@update')->name('users.update');
+
+Route::post('users/store', 'UsuarioController@store')->name('users.store');
 
 Route::get('patient', function () {
     return view('patient');

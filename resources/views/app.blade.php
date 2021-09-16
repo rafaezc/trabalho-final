@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -60,9 +61,105 @@
         </footer>
 
         <!-- JavaScript  -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    
+        <!-- JS functions-->
+        <script type="text/javascript">     
+            var table = document.getElementById("user-data");
+            var rows = table.getElementsByTagName("tr");
+            var cols = table.getElementsByTagName("td");
+            var rowInfo = [];
+            var buttonArea = document.getElementById("button-box");
+            var buttons = buttonArea.getElementsByTagName("button");
+            var buttonDetails = [];
+            var editForm = document.getElementById("edit-form");
+            var inputValues = editForm.getElementsByTagName("input");
+            var selectedValues = editForm.getElementsByTagName("option");
+            var userToUp = document.getElementById("idup");
+            var userToDel = document.getElementById("iddel");
 
+            for(var l = 0; l < buttons.length; l++) {
+                var button = buttons[l];
+                buttonDetails.push(buttons[l]);
+                if (l < 2) {
+                    button.classList.add("cursor-effects");
+                    button.disabled = true;
+                }
+            }
+
+            for(var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                for (var j = 0; j < cols.length; j++) {
+                    if (i % 2 !== 0) {
+                        row.classList.add("stripe");
+                    } else {
+                        row.classList.add("white-stripe");
+                    }
+                }
+
+                row.addEventListener("click", function() { 
+                    rowSelect(this, buttonDetails, false);
+                    if (rowInfo.length === 0) {
+                        for(var k = 0; k < cols.length; k++) { 
+                            rowInfo.push(this.cells[k].innerHTML);
+                            if (rowInfo.length > 5) {
+                                userToUp.setAttribute("value", rowInfo[0]);
+                                userToDel.setAttribute("value", rowInfo[0]);
+                                for(var m = 2; m < inputValues.length - 3; m++) {
+                                    if (m === 4) {
+                                        inputValues[m].setAttribute("value", rowInfo[m].substring(4, 13));
+                                    } else {
+                                        inputValues[m].setAttribute("value", rowInfo[m-1]);
+                                    }
+                                }
+                                for(var n = 0; n < selectedValues.length; n++) {
+                                    selectedValues[n].setAttribute("value", rowInfo[n]);
+                                    console.log(selectedValues[n].setAttribute("value", rowInfo[n]));
+                                }
+                            }
+                        }
+                    } else {
+                        rowInfo.splice(0, 6);
+                        for(var k = 0; k < cols.length; k++) { 
+                            rowInfo.push(this.cells[k].innerHTML);
+                            if (rowInfo.length > 5) {
+                                userToUp.setAttribute("value", rowInfo[0]);
+                                userToDel.setAttribute("value", rowInfo[0]);
+                                for(var m = 2; m < inputValues.length - 3; m++) {
+                                    if (m === 4) {
+                                        inputValues[m].setAttribute("value", rowInfo[m].substring(4, 13));
+                                    } else {
+                                        inputValues[m].setAttribute("value", rowInfo[m-1]);
+                                    }
+                                }
+                                for(var n = 0; n < selectedValues.length; n++) {
+                                    selectedValues[n].setAttribute("value", rowInfo[n]);
+                                    console.log(selectedValues[n].setAttribute("value", rowInfo[n]));
+                                }
+                            }
+                        }
+                    }
+        
+                });
+            }
+
+            function rowSelect(row, button, many) {
+                if(!many) {
+                    var rows = row.parentElement.getElementsByTagName("tr");
+                        for(var i = 0; i < rows.length; i++) {
+                            var aux_row = rows[i];
+                            aux_row.classList.remove("active");    
+                        }
+                }  
+            row.classList.add("active");
+            button[0].disabled = false;
+            button[1].disabled = false;
+            console.log(rowInfo);
+            }
+
+        </script>
     </body>
 </html>
        

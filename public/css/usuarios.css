@@ -2,6 +2,28 @@
     background-color:gray;
 }
 
+.tablehead {
+    pointer-events: none;
+    border: 1px solid #ddd !important;
+    background-color: #c4c4c4;
+}
+
 .prettifier-table {
-    border-bottom: 1px solid black !important;
+    cursor: pointer;
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.stripe {
+    background-color: #efefef;
+}
+
+.white-stripe {
+    background-color: #fafafa;
+}
+
+.cursor-effects {
+    pointer-events: all;
+    cursor: not-allowed;
 }
