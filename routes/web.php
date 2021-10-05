@@ -17,27 +17,33 @@ Route::get('/', function () {
     return view('app');
 });
 
-// Route::post('users', function () {
-//     if (Request::ajax()) {
-//         return view('users');
-//     }
-// });
+Route::resource('users', 'UserController');
 
-Route::resource('users', 'UsuarioController');
+Route::delete('users', 'UserController@destroy')->name('users.destroy');
 
-Route::delete('users', 'UsuarioController@destroy')->name('users.destroy');
+Route::put('users/update', 'UserController@update')->name('users.update');
 
-Route::put('users/update', 'UsuarioController@update')->name('users.update');
+Route::post('users/store', 'UserController@store')->name('users.store');
 
-Route::post('users/store', 'UsuarioController@store')->name('users.store');
+Route::resource('patients', 'PatientController');
 
-Route::get('patient', function () {
-    return view('patient');
-});
+Route::post('patients', 'PatientController@search')->name('patients.search');
 
-Route::get('tests', function () {
-    return view('tests');
-});
+Route::delete('patients', 'PatientController@destroy')->name('patients.destroy');
+
+Route::put('patients/update', 'PatientController@update')->name('patients.update');
+
+Route::any('patients/{id}', 'PatientController@show')->name('patients.show');
+
+Route::post('patients/store', 'PatientController@store')->name('patients.store');
+
+Route::resource('tests', 'TestController');
+
+Route::delete('tests', 'TestController@destroy')->name('tests.destroy');
+
+Route::put('tests/update', 'TestController@update')->name('tests.update');
+
+Route::post('tests/store', 'TestController@store')->name('tests.store');
 
 Route::get('calendar', function () {
     return view('calendar');

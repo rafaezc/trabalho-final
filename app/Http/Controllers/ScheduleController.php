@@ -3,17 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usuario;
 
-class UsuarioController extends Controller
+class ScheduleController extends Controller
 {
-    private $repository;
-
-    public function __construct(Usuario $user)
-    {
-        $this->repository = $user;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +13,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $users = Usuario::all();     
-        return view('users', ['users' => $users]);
+        //
     }
 
     /**
@@ -42,9 +33,8 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
-        $this->repository->create($request->all());
-        return redirect()->route('users.index');
+    {
+        //
     }
 
     /**
@@ -76,12 +66,9 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $user_id = $request->idup;
-        $user = Usuario::find($user_id);
-        $user->save();
-        return redirect()->route('users.index');
+        //
     }
 
     /**
@@ -90,12 +77,8 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $user_id = $request->iddel;
-        $user = Usuario::find($user_id);
-        $user->delete();
-        return redirect()->route('users.index');
+        //
     }
-
 }

@@ -8,15 +8,15 @@
             <div class="col-md-12" id="button-box"> <!-- definir tamanho das colunas -->
                 <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
                     data-toggle="modal" data-target="#deleteUserModal" id="user-delete">
-                    Deletar
+                    <i class="fas fa-trash-alt"></i>&nbsp;Deletar
                 </button>
                 <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
                     data-toggle="modal" data-target="#editUserModal" id="user-edit">
-                    Editar
+                    <i class="fas fa-edit"></i>&nbsp;Editar
                 </button>
                 <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
-                    data-toggle="modal" data-target="#addUserModal"> <!-- alterar cor/forma dos botoes -->
-                    Adicionar
+                    data-toggle="modal" data-target="#addUserModal" id="user-add"> 
+                    <i class="fas fa-plus"></i>&nbsp;Adicionar
                 </button>
             </div>
         </div>
@@ -57,8 +57,8 @@
             </div>
         </div>
         <!-- Modals -->
-            @include('modals.addusermodal', ['modal_id' => 'addUserModal', 'modal_title' => 'Adicionar usuário'])
-            @include('modals.editusermodal', ['modal_id' => 'editUserModal', 'modal_title' => 'Editar usuário'])
-            @include('modals.deleteusermodal', ['modal_id' => 'deleteUserModal', 'modal_title' => 'Excluir usuário'])
+            @include('modals.user.addusermodal', ['modal_id' => 'addUserModal', 'modal_title' => 'Adicionar usuário'])
+            @include('modals.user.editusermodal', ['modal_id' => 'editUserModal', 'modal_title' => 'Editar usuário'])
+            @include('modals.user.deleteusermodal', ['modal_id' => 'deleteUserModal', 'modal_title' => 'Excluir usuário'])
     </div>
 @endsection

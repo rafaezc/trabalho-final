@@ -1,9 +1,3 @@
-/* mudar o nome dessa classe */
-.fundo {
-    background-color: brown;
-    text-align: right;
-}
-
 .btn-right {
     display: flex;
     position: relative;
@@ -73,6 +67,52 @@
     background-color: darkblue !important;
 }
 
-/* .modal-body {
-    overflow-y: auto !important;
-} */
+.tablehead {
+    pointer-events: none;
+    border: 1px solid #ddd !important;
+    background-color: #c4c4c4;
+}
+
+.prettifier-table {
+    cursor: pointer;
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+.stripe {
+    background-color: #efefef;
+}
+
+.white-stripe {
+    background-color: #fafafa;
+}
+
+.cursor-effects {
+    pointer-events: all;
+    cursor: not-allowed;
+}
+
+.unset-style {
+    margin-left: none !important;
+}
+
+.color-link, .color-link:hover {
+    color: #302c2c;
+}
+
+main {
+    height: 74.8vh;
+}
+
+footer {
+    background-color: #212529;
+}
+
+.btn-float {
+    z-index: 1000;
+}
+
+i {
+    line-height: unset !important;
+}

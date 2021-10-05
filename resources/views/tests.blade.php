@@ -5,69 +5,47 @@
 @section('content')
     <div class="container">
         <div class="row ml-auto mb-5">
-            <div class="col"> <!-- definir tamanho das colunas -->
-                <button type="button" class="btn btn-primary btn-right ml-2 mb-1"> <!-- alterar cor/forma dos botoes -->
-                    Adicionar
+            <div class="col-md-12" id="button-box"> <!-- definir tamanho das colunas -->
+                <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
+                    data-toggle="modal" data-target="#deleteTestModal" id="test-delete">
+                    <i class="fas fa-trash-alt"></i>&nbsp;Deletar
                 </button>
-                <button type="button" class="btn btn-primary btn-right ml-2 mb-1">
-                    Editar
+                <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
+                    data-toggle="modal" data-target="#editTestModal" id="test-edit">
+                    <i class="fas fa-edit"></i>&nbsp;Editar
                 </button>
-                <button type="button" class="btn btn-primary btn-right ml-2 mb-1">
-                    Deletar
+                <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
+                    data-toggle="modal" data-target="#addTestModal" id="test-add"> 
+                    <i class="fas fa-plus"></i>&nbsp;Adicionar
                 </button>
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <table class="table">
+            <div class="col-md-12">
+                <table class="table effect3d" id="test-data">
                     <thead>
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th class="tablehead"scope="col">Nome</th>
+                            <th class="tablehead" scope="col">Descrição</th>
+                            <th class="tablehead" scope="col">Data do cadastro</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($tests as $test)
                         <tr>
-                            <td class="prettifier-table" scope="row">1</th>
-                            <td class="prettifier-table">Mark</td>
-                            <td class="prettifier-table">Otto</td>
-                            <td class="prettifier-table">@mdo</td>
+                            <td hidden name="id" class="id">{{ $test['id'] }}</td>
+                            <td class="prettifier-table" scope="row" name="name" class="name">{{ $test['nome'] }}</td>
+                            <td class="prettifier-table">{{ $test['descricao'] }}</td>
+                            <td class="prettifier-table">{{ implode('/', array_reverse(explode('-', substr($test['cadastrado_em'], 0, -9)))) }}</td>
                         </tr>
-                        <tr>
-                            <td class="prettifier-table" scope="row">2</th>
-                            <td class="prettifier-table">Jacob</td>
-                            <td class="prettifier-table">Thornton</td>
-                            <td class="prettifier-table">@fat</td>
-                        </tr>
-                        <tr>
-                            <td class="prettifier-table" scope="row">3</th>
-                            <td class="prettifier-table">Larry</td>
-                            <td class="prettifier-table">the Bird</td>
-                            <td class="prettifier-table">@twitter</td>
-                        </tr>
-                        <tr>
-                            <td class="prettifier-table" scope="row">1</th>
-                            <td class="prettifier-table">Mark</td>
-                            <td class="prettifier-table">Otto</td>
-                            <td class="prettifier-table">@mdo</td>
-                        </tr>
-                        <tr>
-                            <td class="prettifier-table" scope="row">2</th>
-                            <td class="prettifier-table">Jacob</td>
-                            <td class="prettifier-table">Thornton</td>
-                            <td class="prettifier-table">@fat</td>
-                        </tr>
-                        <tr>
-                            <td class="prettifier-table" scope="row">3</th>
-                            <td class="prettifier-table">Larry</td>
-                            <td class="prettifier-table">the Bird</td>
-                            <td class="prettifier-table">@twitter</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+        <!-- Modals -->
+            @include('modals.test.addtestmodal', ['modal_id1' => 'addTestModal', 'modal_title1' => 'Adicionar teste'])
+            @include('modals.test.edittestmodal', ['modal_id1' => 'editTestModal', 'modal_title1' => 'Editar teste'])
+            @include('modals.test.deletetestmodal', ['modal_id1' => 'deleteTestModal', 'modal_title1' => 'Excluir teste'])
     </div>
 @endsection
