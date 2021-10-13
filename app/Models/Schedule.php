@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    protected $table = 'agenda';
+    protected $table = 'sessao';
     
     public $timestamps = false;
 

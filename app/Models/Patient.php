@@ -11,6 +11,6 @@ class Patient extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nome', 'cpf', 'endereco', 'observacoes', 'cadastrado_em', 'status'
+        'nome', 'cpf', 'data_nascimento', 'endereco', 'escolaridade', 'telefone', 'observacoes', 'cadastrado_em', 'status', 'usuario_id'
     ];
 }

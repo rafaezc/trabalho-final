@@ -13,16 +13,16 @@
                     <div class="container">
                         <div class="form-group">
                             <label for="name">Nome completo</label>
-                            <input type="text" class="form-control" id="name" name="nome">
+                            <input type="text" class="form-control" id="name" name="nome" required>
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input type="text" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="user-type">Tipo de usuário</label>
-                                <select class="form-control" id="user-type" name="codigo_usuario" onchange="changeFieldOne()">
+                                <select class="form-control" id="user-type" name="codigo_usuario" onchange="changeFieldOne()" required>
                                     <option value="" disabled selected hidden>Selecione o cargo</option>
                                     <option value="P1">Psquiatra</option>
                                     <option value="P2">Psicólogo(a)</option>
@@ -31,8 +31,8 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="council-type">Tipo de conselho</label>
-                                <select class="form-control" id="council-type" name="tipo_conselho" onchange="changeFieldTwo()">
-                                    <option value="" disabled selected hidden>Selecione o conselho</option>
+                                <select class="form-control" id="council-type" name="tipo_conselho" onchange="changeFieldTwo()" required>
+                                    <option value="-1" disabled selected hidden>Selecione o conselho</option>
                                     <option value="CRM">CRM</option>
                                     <option value="CRP">CRP</option>
                                     <option value="">Não possui</option>
@@ -40,19 +40,16 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="council-number">Número do conselho</label>
-                                <input type="text" class="form-control" id="council-number" name="numero_conselho">
-                                <!-- criar tooltip com o tipo de informação esperada -->
+                                <input type="text" class="form-control" id="council-number" name="numero_conselho" placeholder="Ex: 12345/SP">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="password">Senha</label>
-                            <input type="text" class="form-control" id="password" name="senha">
-                            <!-- criar tooltip com o tipo de informação esperada -->
+                            <input type="password" class="form-control" id="password" name="senha" minlength="8" maxlength="40" placeholder="Crie uma senha com 8 caracteres no mínimo" required>
                         </div>
                         <div class="form-group">
                             <label for="repeat-pass">Confirmar senha</label>
-                            <input type="text" class="form-control" id="repeat-pass" name="senha">
-                            <!-- criar tooltip com o tipo de informação esperada -->
+                            <input type="password" class="form-control" id="repeat-pass" name="repeat-pass" minlength="8" maxlength="40" placeholder="Repita a senha infomada no campo anterior" required>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,16 @@
 @extends('app')
 
-@section('title', 'Paciente '.$patient['nome'])
+@section('title', 'Paciente '. $patientName = isset($patient['nome']) ? $patient['nome'] : '')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
+        <div class="row mx-5">
+            <div class="col-md-12">
+                <h1>{{ $patientName }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container"> <!-- terminar os ajustes no perfil do paciente, parte da sessao -->
         <div class="row mx-5">
             <div class="col-md-12">
                 <div id="accordion">
@@ -25,42 +32,56 @@
                             <div class="card-body">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-9">
                                             <div class="form-group">
                                                 <label for="name">Nome completo</label>
-                                                <input type="text" class="form-control" id="name" name="nome" value="@php echo $patient['nome'] @endphp" readonly>
+                                                <input type="text" class="form-control" id="name" name="nome" value="@php echo $patientName = isset($patient['nome']) ? $patient['nome'] : '' @endphp" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="cpf">CPF</label>
-                                                <input type="text" class="form-control" id="cpf" name="cpf" value="@php echo $patient['cpf'] @endphp" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="cadastrado_em">Data do cadastro</label>
-                                                <input type="text" class="form-control" id="cadastrado_em" name="cadastrado_em" value="@php echo implode('/', array_reverse(explode('-', substr($patient['cadastrado_em'], 0, -9)))) @endphp" readonly>
+                                                <label for="data_nascimento">Data de Nascimento</label>
+                                                <input type="text" class="form-control" id="data_nascimento" name="data_nascimento" value="@php echo $patientDataNasc = isset($patient['data_nascimento']) ? $patient['data_nascimento'] : '' @endphp" readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="cpf">CPF</label>
+                                                <input type="text" class="form-control" id="cpf" name="cpf" value="@php echo $patientCpf = isset($patient['cpf']) ? $patient['cpf'] : '' @endphp" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="telefone">Telefone</label>
+                                                <input type="text" class="form-control" id="telefone" name="telefone" value="@php echo $patientTel = isset($patient['telefone']) ? $patient['telefone'] : '' @endphp" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="escolaridade">Escolaridade</label>
+                                                <input type="text" class="form-control" id="escolaridade" name="escolaridade" value="@php echo $patientEscol = isset($patient['escolaridade']) ? $patient['escolaridade'] : '' @endphp" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="cadastrado_em">Data do cadastro</label>
+                                                <input type="text" class="form-control" id="cadastrado_em" name="cadastrado_em" value="@php $patientDataCad = isset($patient['cadastrado_em']) ? $patient['cadastrado_em'] : '' @endphp @php echo implode('/', array_reverse(explode('-', substr($patientDataCad, 0, -9)))) @endphp" readonly>
+                                            </div>
+                                        </div>
                                         <div class="col-md-9">
                                             <div class="form-group">
                                                 <label for="endereco">Enderço</label>
-                                                <input type="text" class="form-control" id="endereco" name="endereco" value="@php echo $patient['endereco'] @endphp" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="telefone">Telefone</label>
-                                                <input type="text" class="form-control" id="telefone" name="telefone" value="@php echo $patient['telefone'] @endphp" readonly>
+                                                <input type="text" class="form-control" id="endereco" name="endereco" value="@php echo $patientEnd = isset($patient['endereco']) ? $patient['endereco'] : '' @endphp" readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="observacoes">Observações</label>
-                                        <textarea type="text" class="form-control" id="observacoes" name="observacoes" rows="5" readonly>@php echo $patient['observacoes'] @endphp</textarea>
+                                        <textarea type="text" class="form-control" id="observacoes" name="observacoes" rows="5" readonly>@php echo $patientObs = isset($patient['observacoes']) ? $patient['observacoes'] : '' @endphp</textarea>
                                     </div>
                                 </div>
                             </div>

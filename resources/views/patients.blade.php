@@ -3,9 +3,12 @@
 @section('title', 'Pacientes')
 
 @section('content')
+    <div class="container mb-5">
+        <h1>Busca Pacientes</h1>
+    </div>
     <div class="container">
         <div class="row mb-5">
-            <div class="col-md-12" id="button-box"> <!-- definir tamanho das colunas -->
+            <div class="col-md-12" id="button-box"> 
                 <form action="{{ route('patients.search') }}" method="post" id="filter-form">
                     @csrf
                     <div class="input-group">
@@ -49,7 +52,10 @@
             </div>
         </div>
         @if ($patients !== '')
-        <a class="btn btn-primary btn-right btn-float" id="open-btn" href=""><i class="fas fa-window-maximize"></i>&nbsp;ABRIR</a> <!-- verificar posição do botao quando existir mais registros -->
+        <a class="btn btn-primary btn-right btn-float" id="open-btn" href=""><i class="fas fa-window-maximize"></i>&nbsp;ABRIR</a> 
+        @endif
+        @if (isset($filter)) 
+        {{ $patients->appends($filter)->links() }}
         @endif
     </div>
 @endsection

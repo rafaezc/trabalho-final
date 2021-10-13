@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Test;
 
 class TestController extends Controller
@@ -21,7 +22,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $tests = Test::all();     
+        $tests = Test::paginate(15);     
         return view('tests', ['tests' => $tests]);
     }
 
@@ -43,9 +44,20 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {       
-        $this->repository->create($request->all());
-        // dd($request->all());
-        return redirect()->route('tests.index');
+        $tests = Test::all();
+
+        if (!$tests->contains('nome', $request->nome)
+        && !$tests->contains('descricao', $request->descricao)) {
+
+            $this->repository->create($request->all());
+            // dd($request->all());
+            return redirect()->route('tests.index')->with('toast_success', 'Teste cadastrado com sucesso.');
+
+        } else {
+
+            return redirect()->route('tests.index')->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
+        }
+
     }
 
     /**
@@ -79,11 +91,23 @@ class TestController extends Controller
      */
     public function update(Request $request)
     {
-        $test_id = $request->idup;
-        $test = Test::find($test_id);
-        // dd($request->all());
-        $test->update($request->all());
-        return redirect()->route('tests.index');
+        $tests = Test::all();
+
+        if (!$tests->contains('nome', $request->nome)
+        || !$tests->contains('descricao', $request->descricao)) {
+
+            $test_id = $request->idup;
+            $test = Test::find($test_id);
+            // dd($request->all());
+            $test->update($request->all());
+
+            return redirect()->route('tests.index')->with('toast_success', 'Teste editado com sucesso.');
+
+        } else {
+
+            return redirect()->route('tests.index')->with('toast_info', 'Tentativa de edição com dados duplicados!');;
+        }
+       
     }
 
     /**
@@ -97,7 +121,7 @@ class TestController extends Controller
         $test_id = $request->iddel;
         $test = Test::find($test_id);
         $test->delete();
-        return redirect()->route('tests.index');
+        return redirect()->route('tests.index')->with('toast_success', 'Teste deletado com sucesso.');;
     }
 
 }

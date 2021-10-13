@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
-use App\Models\User;
 
 class PatientController extends Controller
 {
@@ -22,13 +21,19 @@ class PatientController extends Controller
      */
     public function search(Request $request)
     {   
+        $filter = $request->except('_token');
+
         if (!is_null($request->search)) {
             $patients = Patient::where('nome', 'LIKE', "%{$request->search}%")
                                 ->orwhere('cpf', 'LIKE', "%{$request->search}%")
-                                ->paginate(25);
-            return view('patients', ['patients' => $patients]);
+                                ->paginate(20);
+            // if ($patients == '') {
+                // return redirect()->route('patients.index');    
+            // } else {
+                return view('patients', ['patients' => $patients, 'filter' => $filter]);
+            // }
         } else {
-            return redirect()->route('patients.index');
+            return view('patients', ['patients' => '']);
         }
         // dd($request->search);
         // return view('patients', ['patients' => $patients]);
@@ -37,10 +42,10 @@ class PatientController extends Controller
 
     public function index()
     {
-        $patients = '';
-        // Patient::all();
+        // $patients = '';
+        // $patients = Patient::paginate(10);
         // $usernames = User::pluck('nome', 'id');     
-        return view('patients', ['patients' => $patients]);
+        // return view('patients', ['patients' => $patients]);
         // 'usernames' => $usernames
     }
 
@@ -62,9 +67,21 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {       
-        $this->repository->create($request->all());
-        // dd($request->all());
-        return redirect()->route('patients.show');
+        $patients = Patient::all();
+
+        if (!$patients->contains('nome', $request->nome) 
+        && !$patients->contains('cpf', $request->cpf)) {
+                
+            $request['usuario_id'] = 2; // inserir aqui a variavel que captura o id do usuario logado.
+            // dd($request);
+            $this->repository->create($request->all());
+
+            return redirect()->route('patients.search')->with('toast_success', 'Paciente cadastrado com sucesso.');
+
+        } else {
+
+            return redirect()->route('patients.search')->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
+        }
     }
 
     /**
@@ -97,13 +114,27 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $patient_id = $request->idup;
-        $patient = Patient::find($patient_id);
-        // dd($request->all());
-        $patient->update($request->all());
-        return redirect()->route('patients.show', $patient->id);
+        $patients = Patient::all();
+
+        $patient = Patient::find($id);
+
+        if (!$patients->contains('nome', $request->nome) 
+        || !$patients->contains('cpf', $request->cpf)) {
+            
+            $request['usuario_id'] = 2; // inserir aqui a variavel que captura o id do usuario logado.
+            // dd($patient_id);
+            // dd($request->all());
+            $patient->update($request->all());
+
+            return redirect()->route('patients.show', $patient->id)->with('toast_success', 'Paciente editado com sucesso.');
+
+        } else {
+
+            return redirect()->route('patients.show', $patient->id)->with('toast_info', 'Tentativa de edição com dados duplicados!');
+        }
+    
     }
 
     /**
@@ -112,12 +143,11 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        $patient_id = $request->iddel;
-        $patient = Patient::find($patient_id);
+        $patient = Patient::find($id);
         $patient->delete();
-        return redirect()->route('patients.search');
+        return redirect()->route('patients.search')->with('toast_success', 'Paciente deletado com sucesso.');;
     }
 
 }

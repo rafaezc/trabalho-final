@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// discriminar todas as rotas .index
+
 Route::get('/', function () {
     return view('app');
 });
@@ -25,15 +27,17 @@ Route::put('users/update', 'UserController@update')->name('users.update');
 
 Route::post('users/store', 'UserController@store')->name('users.store');
 
-Route::resource('patients', 'PatientController');
+// Route::resource('patients', 'PatientController');
 
-Route::post('patients', 'PatientController@search')->name('patients.search');
+// Route::any('patients/searchi', 'PatientController@index')->name('patients.index');
 
-Route::delete('patients', 'PatientController@destroy')->name('patients.destroy');
+Route::any('patients/search', 'PatientController@search')->name('patients.search');
 
-Route::put('patients/update', 'PatientController@update')->name('patients.update');
+Route::delete('patients/delete/{id}', 'PatientController@destroy')->name('patients.destroy');
 
-Route::any('patients/{id}', 'PatientController@show')->name('patients.show');
+Route::put('patients/update/{id}', 'PatientController@update')->name('patients.update');
+
+Route::any('patients/show/{id}', 'PatientController@show')->name('patients.show');
 
 Route::post('patients/store', 'PatientController@store')->name('patients.store');
 
@@ -45,6 +49,10 @@ Route::put('tests/update', 'TestController@update')->name('tests.update');
 
 Route::post('tests/store', 'TestController@store')->name('tests.store');
 
-Route::get('calendar', function () {
-    return view('calendar');
-});
+Route::resource('schedules', 'ScheduleController');
+
+Route::delete('schedules', 'ScheduleController@destroy')->name('schedules.destroy');
+
+Route::put('schedules/update', 'ScheduleController@update')->name('schedules.update');
+
+Route::post('schedules/store', 'ScheduleController@store')->name('schedules.store');

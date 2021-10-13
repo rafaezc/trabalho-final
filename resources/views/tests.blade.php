@@ -3,6 +3,9 @@
 @section('title', 'Testes')
 
 @section('content')
+    <div class="container mb-5">
+        <h1>Testes</h1>
+    </div>
     <div class="container">
         <div class="row ml-auto mb-5">
             <div class="col-md-12" id="button-box"> <!-- definir tamanho das colunas -->
@@ -47,5 +50,6 @@
             @include('modals.test.addtestmodal', ['modal_id1' => 'addTestModal', 'modal_title1' => 'Adicionar teste'])
             @include('modals.test.edittestmodal', ['modal_id1' => 'editTestModal', 'modal_title1' => 'Editar teste'])
             @include('modals.test.deletetestmodal', ['modal_id1' => 'deleteTestModal', 'modal_title1' => 'Excluir teste'])
+        {{ $tests->links() }}
     </div>
 @endsection

@@ -3,6 +3,9 @@
 @section('title', 'Usuários')
 
 @section('content')
+    <div class="container mb-5">
+        <h1>Usuários</h1>
+    </div>
     <div class="container">
         <div class="row ml-auto mb-5">
             <div class="col-md-12" id="button-box"> <!-- definir tamanho das colunas -->
@@ -37,7 +40,7 @@
                         @if ($user['codigo_usuario'] !== 'M1')
                         <tr>
                             <td hidden name="id" class="id">{{ $user['id'] }}</td>
-                            <td class="prettifier-table" scope="row" name="name" class="name">{{ $user['nome'] }}</td>
+                            <td class="prettifier-table">{{ $user['nome'] }}</td>
                             <td class="prettifier-table">{{ $user['email'] }}</td>
                                 @if ($user['codigo_usuario'] === 'P1') 
                                     @php $user['cargo'] = 'Psiquiatra'; @endphp

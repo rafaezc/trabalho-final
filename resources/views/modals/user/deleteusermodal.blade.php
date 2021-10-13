@@ -13,7 +13,8 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="delete-warning">
-                            <div id="delete-username-warning">Confirma a exlusão do usuário ?</div>    
+                            <div id="delete-username-warning"></div>    
+                            {{-- Confirma a exlusão do usuário ? --}}
                             <div>Essa ação é irreversível e não poderá ser desfeita.</div>        
                         </div>
                         <input name="iddel" id="iddel" type="hidden" value="" >

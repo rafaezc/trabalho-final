@@ -8,8 +8,8 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         
-        <!-- Full Calendar -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+        <!-- Bootstrap Select -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"> 
             
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/usuarios.css') }}">
@@ -35,14 +35,14 @@
                             <a class="nav-link" href="/users">Usuários</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/calendar">Agenda</a>
+                            <a class="nav-link" href="/schedules">Agenda</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pacientes
                                 <i class="fas fa-angle-down"></i>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/patients"><i class="fas fa-search"></i> Buscar pacientes</a>
+                                <a class="dropdown-item" href="/patients/search"><i class="fas fa-search"></i> Buscar pacientes</a>
                                 <a class="dropdown-item" href="/patients/add" type="button" data-toggle="modal" 
                                     data-target="#addPatientModal" id="patient-add"><i class="fas fa-plus"></i> Adicionar paciente</a>
                             </div>
@@ -67,6 +67,8 @@
             </div>
         </footer>
 
+        @include('sweetalert::alert')
+
         <!-- Modals -->
         @include('modals.patient.addpatientmodal', ['modal_id' => 'addPatientModal', 'modal_title' => 'Adicionar paciente'])
 
@@ -74,37 +76,41 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>    
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://kit.fontawesome.com/96cc411e91.js"></script>
         
         <!-- JS functions -->
         <script type="text/javascript">
+            $(document).ready(function() {
+                $(".select-filter").select2();
+                // $(".select-filter").val(0).hide(); 
+            });
+
             if (window.location.pathname.includes('/patients/')) {
                 var url = window.location.pathname.split("/")[1].slice(0, -1);
             } else {
                 var url = window.location.pathname.slice(0, -1).replace("/", ""); 
             }
-            var table = document?.getElementById(url + "-data");
+            var table = document?.getElementById(url + "-data"); //-- adicionar ? antes de todo document para esconder "erros" do console
             var rows = table?.getElementsByTagName("tr");
             var rowInfo = [];
-            var buttonArea = document.getElementById("button-box");
+            var buttonArea = document?.getElementById("button-box");
             var buttons = buttonArea?.getElementsByTagName("button");
             var buttonDetails = [];
             var editForm = document?.getElementById("edit-form");
+            var addForm = document?.getElementById("add-form");
             console.log(editForm);
             var inputEditValues = editForm?.getElementsByTagName("input");
             var textareaEditValues = editForm?.getElementsByTagName("textarea");
             var selectedEditValues = editForm?.getElementsByTagName("select");
-            var addForm = document?.getElementById("add-form");
-            // var inputAddValues = addForm.getElementsByTagName("input");  
-            // var selectedAddValues = addForm.getElementsByTagName("select");  
-            var userToUp = document.getElementById("idup");
-            var userToDel = document.getElementById("iddel");
-            var nameToDel = document.getElementById("delete-" + url +"name-warning");
-            var openProfile = document.getElementById("open-btn");
+            var inputAddValues = addForm?.getElementsByTagName("input");
+            var selectedAddValues = addForm?.getElementsByTagName("select");
+            var userToUp = document?.getElementById("idup");
+            var userToDel = document?.getElementById("iddel");
+            var nameToDel = document?.getElementById("delete-" + url +"name-warning");
+            var openProfile = document?.getElementById("open-btn");
             console.log(openProfile);
-            
+
             if (buttons && buttons.length > 2) {
                 for(var i = 0; i < buttons.length; i++) {
                     var button = buttons[i];
@@ -125,21 +131,25 @@
                         row.classList.add("white-stripe");
                     }
 
-                    row.addEventListener("dblclick", function() {
-                        console.log("abre fdp");
-                    });
-
                     row.addEventListener("click", function() { 
                         rowSelect(this, buttonDetails, false);
                         if (rowInfo.length === 0) {
                             for(var k = 0; k < this.cells.length; k++) { 
                                 rowInfo.push(this.cells[k].innerHTML);
+                                if (url === "schedule" && rowInfo.length > 3) {
+                                    userToUp.setAttribute("value", rowInfo[0]);
+                                    userToDel.setAttribute("value", rowInfo[0]);
+                                    nameFixer(rowInfo[1], rowInfo[2]);
+                                    setDropdowns(rowInfo[1], rowInfo[2]);
+                                    sendInputs(rowInfo);
+                                }
                                 if (url === "test" && rowInfo.length > 3) {
                                     userToUp.setAttribute("value", rowInfo[0]);
                                     userToDel.setAttribute("value", rowInfo[0]);
+                                    console.log(rowInfo);
                                     nameFixer(rowInfo[1]);
                                     sendInputs(rowInfo);
-                                    textareaEditValues[0].append(rowInfo[2]);
+                                    textareaEditValues[0].innerHTML = rowInfo[2];
                                 }
                                 if (url === "user" && rowInfo.length > 5) {
                                     userToUp.setAttribute("value", rowInfo[0]);
@@ -156,12 +166,20 @@
                             rowInfo.splice(0, 6);
                             for(var k = 0; k < this.cells.length; k++) { 
                                 rowInfo.push(this.cells[k].innerHTML);
+                                if (url === "schedule" && rowInfo.length > 3) {
+                                    userToUp.setAttribute("value", rowInfo[0]);
+                                    userToDel.setAttribute("value", rowInfo[0]);
+                                    nameFixer(rowInfo[1], rowInfo[2]);
+                                    setDropdowns(rowInfo[1], rowInfo[2]);
+                                    sendInputs(rowInfo);
+                                }
                                 if (url === "test" && rowInfo.length > 3) {
                                     userToUp.setAttribute("value", rowInfo[0]);
                                     userToDel.setAttribute("value", rowInfo[0]);
-                                    nameFixer(rowInfo[1]);
+                                    console.log(rowInfo);
+                                    nameFixer(rowInfo[1]); 
                                     sendInputs(rowInfo);
-                                    textareaEditValues[0].append(rowInfo[2]); 
+                                    textareaEditValues[0].innerHTML = rowInfo[2]; 
                                 }
                                 if (url === "user" && rowInfo.length > 5) {
                                     userToUp.setAttribute("value", rowInfo[0]);
@@ -193,7 +211,6 @@
                     }
                 }
                 row.classList.add("active");
-                // setHref(rowInfo[0]);
                 console.log(rowInfo); 
             }
 
@@ -250,43 +267,87 @@
                 }
             }
             
-            function setDropdowns(values) {
-                switch (values) {
-                    case "Psiquiatra":
-                        selectedEditValues[0][1].setAttribute("selected", "");
-                        selectedEditValues[1][1].setAttribute("selected", "");
-                        break;
-                    case "Psicólogo(a)":
-                        selectedEditValues[0][2].setAttribute("selected", "");
-                        selectedEditValues[1][2].setAttribute("selected", "");
-                        break;
-                    case "Secretário(a)":
-                        selectedEditValues[0][3].setAttribute("selected", "");
-                        selectedEditValues[1][3].setAttribute("selected", "");
-                        selectedEditValues[1].setAttribute("disabled", "");
-                        inputEditValues[4].setAttribute("disabled", "");
-                        break;
+            function setDropdowns(value1, value2) {
+                if (url === "user") {
+                    switch (value1) {
+                        case "Psiquiatra":
+                            selectedEditValues[0][1].setAttribute("selected", "");
+                            selectedEditValues[1][1].setAttribute("selected", "");
+                            break;
+                        case "Psicólogo(a)":
+                            selectedEditValues[0][2].setAttribute("selected", "");
+                            selectedEditValues[1][2].setAttribute("selected", "");
+                            break;
+                        case "Secretário(a)":
+                            selectedEditValues[0][3].setAttribute("selected", "");
+                            selectedEditValues[1][3].setAttribute("selected", "");
+                            selectedEditValues[1].setAttribute("disabled", "");
+                            inputEditValues[4].setAttribute("disabled", "");
+                            break;
+                    }
                 }
+                if (url === "schedule") {
+                    console.log(selectedEditValues[0][1].innerHTML, value1, value2);
+                    for(var p = 0; p < selectedEditValues[0].length; p++) {
+                        if (selectedEditValues[0][p].innerHTML === value1) {
+                            console.log(p);
+                            $(".select-filter").val(p).change(); 
+                            // selectedEditValues[0][p].setAttribute("selected", "");
+                        }
+                    }   
+                    for(var q = 0; q < selectedEditValues[1].length; q++) {
+                        if (selectedEditValues[1][q].innerHTML === value2) {
+                            selectedEditValues[1][q].setAttribute("selected", "");
+                        }
+                    }
+                }
+                
             }    
 
             function sendInputs(values) {
-                console.log(values);
-                let quantity = url === "test" ? 0 : 3;
-                for(var p = 2; p < inputEditValues.length - quantity; p++) {
-                    if (p === 4) {
-                        inputEditValues[p].setAttribute("value", values[p].substring(4, 13));
-                    } else {
-                        inputEditValues[p].setAttribute("value", values[p-1]);
-                    }
-                }    
+                console.log(values, inputEditValues);
+                if (url === "user") {
+                    for(var r = 2; r < inputEditValues.length - 3; r++) {
+                        if (r === 4) {
+                            inputEditValues[r].setAttribute("value", values[r].substring(4, 13));
+                        } else {
+                            inputEditValues[r].setAttribute("value", values[r-1]);
+                        }
+                    }   
+                }
+                if (url === "test") {
+                    for(var s = 2; s < inputEditValues.length; s++) {
+                        if (s === 3) {
+                            inputEditValues[s].setAttribute("value", values[s-3]);
+                        } else {
+                            inputEditValues[s].setAttribute("value", values[s-1]);
+                        }
+                    }  
+                }
+                if (url === "schedule") {
+                    console.log(values);
+                    var dataRev = values[3].split(" ");
+                    var dataMod = dataRev[0].split("/").reverse().join("-");
+                    
+                    var dataFormat = dataMod + "T" + dataRev[1];
+                    console.log(dataFormat);
+                    inputEditValues[2].setAttribute("value", dataFormat);
+                }
             }
 
-            function nameFixer(name) {
+            function nameFixer(name, namedr) {
                 if (url === "test") {
+                    nameToDel.textContent = "Confirma a exlusão do teste ?";
                     var x = nameToDel.textContent.split(" ");
                     x.splice(5, 0, name.substring(5));
                     nameToDel.textContent = x.join(" ");
+                } else if (url === "schedule") {
+                    nameToDel.textContent = "Confirma a exlusão da sessão ?";
+                    var x = nameToDel.textContent.split(" ");
+                    x.splice(5, 0, "do Sr.(a) " + name + " com o(a) Dr.(a) " + namedr + " no dia " + rowInfo[3].split(" ")[0] + " às " + rowInfo[3].split(" ")[1] + "h") ;
+                    nameToDel.textContent = x.join(" ");
                 } else {
+                    nameToDel.textContent = "Confirma a exlusão do usuário ?";
                     var x = nameToDel.textContent.split(" ");
                     x.splice(5, 0, name);
                     nameToDel.textContent = x.join(" ");
@@ -304,9 +365,53 @@
                 }
                 console.log(openProfile);
             }
+
+            function changeFieldOne($event) {
+                console.log(event);
+                switch (event.target.value) {
+                    case "P1":
+                        selectedAddValues[1].removeAttribute("disabled");
+                        inputAddValues[3].removeAttribute("disabled");
+                        selectedAddValues[1].value = "CRM";
+                        break;
+                    case "P2":                        
+                        selectedAddValues[1].removeAttribute("disabled");
+                        inputAddValues[3].removeAttribute("disabled");
+                        selectedAddValues[1].value = "CRP";
+                        break;
+                    case "S1": 
+                        selectedAddValues[1].value = "";
+                        selectedAddValues[1].setAttribute("disabled", "");
+                        inputAddValues[3].setAttribute("disabled", "");
+                        inputAddValues[3].setAttribute("value", "");
+                        break;
+                }
+            }
+
+            function changeFieldTwo($event) {
+                console.log(event);
+                switch (event.target.value) {
+                    case "CRM":
+                        selectedAddValues[1].removeAttribute("disabled");
+                        inputAddValues[3].removeAttribute("disabled");
+                        selectedAddValues[0].value = "P1";
+                        break;
+                    case "CRP":
+                        selectedAddValues[1].removeAttribute("disabled");
+                        inputAddValues[3].removeAttribute("disabled");
+                        selectedAddValues[0].value = "P2";
+                        break;
+                    case "": 
+                        selectedAddValues[0].value = "S1";
+                        selectedAddValues[1].setAttribute("disabled", "");
+                        inputAddValues[3].setAttribute("disabled", "");
+                        inputAddValues[3].setAttribute("value", "");
+                        break;
+                }
+            }
+            // criar function para conferir se as senhas batem
+
             // jogar para um arquivo separado quando terminar de mexer no script
-            // implementar os rules possíveis no momento 
-            // fazer um rodapé
         </script>
     </body>
 </html>

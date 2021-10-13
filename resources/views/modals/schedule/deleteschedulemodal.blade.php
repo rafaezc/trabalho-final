@@ -1,4 +1,4 @@
-<form action="{{ route('patients.destroy', $patient->id) }}" method="post">
+<form action="{{ route('schedules.destroy') }}" method="post">
     <div class="modal fade" id="{{ $modal_id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -13,9 +13,11 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="delete-warning">
-                            <div id="delete-username-warning">Confirma a exlusão do paciente {{ $patient->nome }} ?</div>    
+                            <div id="delete-schedulename-warning"></div> 
+                            {{-- Confirma a exlusão da sessão ?    --}}
                             <div>Essa ação é irreversível e não poderá ser desfeita.</div>        
                         </div>
+                        <input name="iddel" id="iddel" type="hidden" value="" >
                     </div>    
                 </div>
                 <div class="modal-footer">

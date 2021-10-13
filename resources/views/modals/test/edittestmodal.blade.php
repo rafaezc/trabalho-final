@@ -17,11 +17,11 @@
                     <div class="container">
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" id="name" name="nome" value="">
+                            <input type="text" class="form-control" id="name" name="nome" value="" required>
                         </div>
                         <div class="form-group">
                             <label for="descricao">Descrição</label>
-                            <textarea type="text" class="form-control" id="descricao" name="descricao" rows="5"></textarea>
+                            <textarea type="text" class="form-control" id="descricao" name="descricao" rows="5" placeholder="Insira aqui uma breve descrição da realização e objetivos do teste" required></textarea>
                         </div>
                         <input name="idup" id="idup" type="hidden" value="">
                     </div>

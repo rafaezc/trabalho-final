@@ -17,11 +17,11 @@
                     <div class="container">
                         <div class="form-group">
                             <label for="name">Nome completo</label>
-                            <input type="text" class="form-control" id="name" name="nome" value="">
+                            <input type="text" class="form-control" id="name" name="nome" value="" required>
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input type="text" class="form-control" id="email" name="email" value="">
+                            <input type="text" class="form-control" id="email" name="email" value="" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
@@ -44,19 +44,16 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="council-number">Número do conselho</label>
-                                <input type="text" class="form-control" id="council-number" name="numero_conselho" value="">
-                                <!-- criar tooltip com o tipo de informação esperada -->
+                                <input type="text" class="form-control" id="council-number" name="numero_conselho" value="" placeholder="Ex: 12345/SP">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="password">Nova senha</label>
-                            <input type="text" class="form-control" id="password" name="senha">
-                            <!-- criar tooltip com o tipo de informação esperada -->
+                            <input type="password" class="form-control" id="password" name="senha" minlength="8" maxlength="40" placeholder="Crie uma nova senha com 8 caracteres no mínimo">
                         </div>
                         <div class="form-group">
                             <label for="repeat-pass">Confirmar nova senha</label>
-                            <input type="text" class="form-control" id="repeat-pass" name="senha">
-                            <!-- criar tooltip com o tipo de informação esperada -->
+                            <input type="password" class="form-control" id="repeat-pass" name="repeat-pass" minlength="8" maxlength="40" placeholder="Repita a senha infomada no campo anterior">
                         </div>
                         <input name="idup" id="idup" type="hidden" value="">
                     </div>
