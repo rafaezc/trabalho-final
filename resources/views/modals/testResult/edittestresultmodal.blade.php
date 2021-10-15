@@ -1,4 +1,4 @@
-<form action="{{ route('patients.update', $patient->id) }}" method="post" id="edit-form"> 
+<form action="{{ route('testresults.update', $patientSchedule->id) }}" method="post" id="edit-form"> 
     <div class="modal fade" id="{{ $modal_id }}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -46,14 +46,14 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="escolaridade">Escolaridade</label>
-                                <select class="form-control" id="escolaridade" name="escolaridade">
+                                <select class="form-control" id="escolaridade" name="escolaridade" onchange="changeFieldOne()" value="@php echo $patient->escolaridade @endphp">
                                     <option value="" disabled selected hidden>Selecione o nível</option>
-                                    <option value="Fundamental Incompleto" @php echo $selected = $patient->escolaridade == "Fundamental Incompleto" ? "selected" : "" @endphp>Fundamental Incompleto</option>
-                                    <option value="Fundamental Completo" @php echo $selected = $patient->escolaridade == "Fundamental Completo" ? "selected" : "" @endphp>Fundamental Completo</option>
-                                    <option value="Médio Incompleto" @php echo $selected = $patient->escolaridade == "Médio Incompleto" ? "selected" : "" @endphp>Médio Incompleto</option>
-                                    <option value="Médio Completo" @php echo $selected = $patient->escolaridade == "Médio Completo" ? "selected" : "" @endphp>Médio Completo</option>
-                                    <option value="Superior Incompleto" @php echo $selected = $patient->escolaridade == "Superior Incompleto" ? "selected" : "" @endphp>Superior Incompleto</option>
-                                    <option value="Superior Completo" @php echo $selected = $patient->escolaridade == "Superior Completo" ? "selected" : "" @endphp>Superior Completo</option>
+                                    <option value="Fundamental Incompleto">Fundamental Incompleto</option>
+                                    <option value="Fundamental Completo">Fundamental Completo</option>
+                                    <option value="Médio Incompleto">Médio Incompleto</option>
+                                    <option value="Médio Completo">Médio Completo</option>
+                                    <option value="Superior Incompleto">Superior Incompleto</option>
+                                    <option value="Superior Completo">Superior Completo</option>
                                 </select>
                             </div>
                         </div>

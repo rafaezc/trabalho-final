@@ -1,4 +1,4 @@
-<form action="{{ route('patients.destroy', $patient->id) }}" method="post">
+<form action="{{ route('testresults.destroy', $patientSchedule->id) }}" method="post">
     <div class="modal fade" id="{{ $modal_id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">

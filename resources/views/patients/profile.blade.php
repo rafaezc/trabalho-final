@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="col-md-9">
                                             <div class="form-group">
-                                                <label for="endereco">Enderço</label>
+                                                <label for="endereco">Endereço</label>
                                                 <input type="text" class="form-control" id="endereco" name="endereco" value="@php echo $patientEnd = isset($patient['endereco']) ? $patient['endereco'] : '' @endphp" readonly>
                                             </div>
                                         </div>
@@ -87,23 +87,62 @@
                             </div>
                         </div>
                     </div>
+                    @foreach ($patientSchedules as $patientSchedule)
                     <div class="card mb-4">
                         <h5 class="mb-0">
                             <button class="btn btn-link color-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Histórico de sesões
+                                {{ "Sessão: " . implode('/', array_reverse(explode('-', substr($patientSchedule['data_hora'], 0, -9)))) }}
+                            </button>
+                            <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
+                                data-toggle="modal" data-target="#deleteTestResultModal" id="testresult-delete">
+                                <i class="fas fa-trash-alt"></i>&nbsp;Deletar Teste
+                            </button>
+                            <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
+                                data-toggle="modal" data-target="#editTestResultModal" id="testresult-edit">
+                                <i class="fas fa-edit"></i>&nbsp;Editar Teste
+                            </button>
+                            <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
+                                data-toggle="modal" data-target="#addTestResultModal" id="testresult-add"> 
+                                <i class="fas fa-plus"></i>&nbsp;Adicionar Teste
                             </button>
                         </h5>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="name">Profissional</label>
+                                                @foreach ($userProfNames as $userProfName) 
+                                                @if ($patientSchedule['usuario_id'] == $userProfName['id']) 
+                                                    @php $patientSchedule['usuario_nome'] = $userProfName['nome'] @endphp
+                                                @endif 
+                                                @endforeach
+                                                <input type="text" class="form-control" id="name" name="nome" value="@php echo $patientProName = isset($patientSchedule['usuario_nome']) ? $patientSchedule['usuario_nome'] : '' @endphp" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="anotacoes">Anotações</label>
+                                        <textarea type="text" class="form-control" id="anotacoes" name="anotacoes" rows="3" readonly>@php echo $patientAnot = isset($patientSchedule['anotacoes']) ? $patientSchedule['anotacoes'] : '' @endphp</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="conclusoes">Conclusão</label>
+                                        <textarea type="text" class="form-control" id="conclusoes" name="conclusoes" rows="3" readonly>@php echo $patientConc = isset($patientSchedule['conclusoes']) ? $patientSchedule['conclusoes'] : '' @endphp</textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>
         <!-- Modals -->
             @include('modals.patient.editpatientmodal', ['modal_id' => 'editPatientModal', 'modal_title' => 'Editar paciente'])
             @include('modals.patient.deletepatientmodal', ['modal_id' => 'deletePatientModal', 'modal_title' => 'Excluir paciente'])
+            @include('modals.testResult.addtestresultmodal', ['modal_id' => 'addTestResultModal', 'modal_title' => 'Adicionar avaliação'])
+            @include('modals.testResult.edittestresultmodal', ['modal_id' => 'editTestResultModal', 'modal_title' => 'Editar avaliação'])
+            @include('modals.testResult.deletetestresultmodal', ['modal_id' => 'deleteTestResultModal', 'modal_title' => 'Excluir avaliação'])
     </div>
 @endsection

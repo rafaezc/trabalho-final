@@ -1,4 +1,4 @@
-<form action="{{ route('patients.store') }}" method="post" id="add-form">
+<form action="{{ route('testresults.store') }}" method="post" id="add-form">
     <div class="modal fade" id="{{ $modal_id }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">

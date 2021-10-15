@@ -15,7 +15,7 @@
                 </button>
                 <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
                     data-toggle="modal" data-target="#editScheduleModal" id="schedule-edit">
-                    <i class="fas fa-edit"></i>&nbsp;Editar
+                    <i class="fas fa-edit"></i>&nbsp;Atender/Remarcar
                 </button>
                 <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
                     data-toggle="modal" data-target="#addScheduleModal" id="schedule-add"> 
@@ -36,6 +36,10 @@
                     <tbody>
                         @foreach ($schedules as $schedule)
                         <tr>
+                            <!-- fazer primeiro criar login/logout e permissoes de usuario, 
+                            terminar perfil do paciente(modais dos testes e configurar relatorio, add botao), 
+                            validação front(resultado testes e login), 
+                            retirar logs e comentarios -->
                             <td hidden name="id" class="id">{{ $schedule['id'] }}</td>
                             @foreach ($patientnames as $patientname) 
                                 @if ($schedule['paciente_id'] == $patientname['id'])
@@ -50,6 +54,8 @@
                             @endforeach
                             <td class="prettifier-table">{{ $schedule['usuario_nome'] }}</td>
                             <td class="prettifier-table">{{ implode('/', array_reverse(explode('-', substr($schedule['data_hora'], 0, -9)))) }} {{ explode(' ', substr($schedule['data_hora'], 0, -3))[1] }}</td>
+                            <td hidden name="anotacoes" class="anotacoes">{{ $schedule['anotacoes'] }}</td>
+                            <td hidden name="conclusoes" class="conclusoes">{{ $schedule['conclusoes'] }}</td>
                         </tr>
                         @endforeach
                     </tbody>

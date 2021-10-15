@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\TestResults;
 
 // Deixar o controller da agenda rodando liso
 class ScheduleController extends Controller
@@ -24,13 +25,25 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::paginate(20); 
+        $schedules = Schedule::where('data_hora', '>', date('Y-m-d h:i:S'))->orderby('data_hora', 'asc')->paginate(20); 
+
         $usernames = User::all();
+
         $patientnames = Patient::all();
-        // dd($patientnames);    
+        // dd($schedules);    
         return view('schedules', ['schedules' => $schedules, 'usernames' => $usernames, 'patientnames' => $patientnames]);
     }
 
+    public function indexold()
+    {
+        $schedulesOlds = Schedule::where('data_hora', '<', date('Y-m-d h:i:S'))->orderby('data_hora', 'asc')->paginate(20);
+
+        $usernamesOlds = User::all();
+
+        $patientnamesOlds = Patient::all();
+        // dd($patientnames);    
+        return view('pastschedules', ['schedulesOlds' => $schedulesOlds, 'usernamesOlds' => $usernamesOlds, 'patientnamesOlds' => $patientnamesOlds]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -55,8 +68,10 @@ class ScheduleController extends Controller
         && !$schedules->contains('usuario_id', $request->usuario_id) 
         && !$schedules->contains('data_hora', $request->data_hora)) {
             
-            if ($request->anotacoes == '' || $request->conclusoes == '') {
-                $this->repository->create($request->except(['anotacoes', 'conclusoes']));
+            if ($request->anotacoes == '') {
+                $this->repository->create($request->except('anotacoes'));
+            } else if ($request->conclusoes == '') {
+                $this->repository->create($request->except('conclusoes'));
             } else {
                 $this->repository->create($request->all());
             }
@@ -100,17 +115,21 @@ class ScheduleController extends Controller
      */
     public function update(Request $request)
     {
-        $schedules = Schedule::all(); 
+        $schedule_id = $request->idup;
+        $schedule = Schedule::find($schedule_id);
+
+        $schedules = Schedule::where('id', '!=', $schedule_id)->get();
 
         if (!$schedules->contains('paciente_id', $request->paciente_id) 
         || !$schedules->contains('usuario_id', $request->usuario_id) 
         || !$schedules->contains('data_hora', $request->data_hora)) {
             
-            $schedule_id = $request->idup;
-            $schedule = Schedule::find($schedule_id);
-            if ($request->anotacoes == '' || $request->conclusoes == '') {
+            if ($request->anotacoes == '') {
                 // dd($request);
-                $schedule->update($request->except(['anotacoes', 'conclusoes']));
+                $schedule->update($request->except('anotacoes'));
+            } else if ($request->conclusoes == '') {
+                // dd($request);
+                $schedule->update($request->except('conclusoes'));
             } else {
                 // dd($request);
                 $schedule->update($request->all());
@@ -122,6 +141,14 @@ class ScheduleController extends Controller
 
             return redirect()->route('schedules.index')->with('toast_info', 'Tentativa de edição com dados duplicados!');
         }
+    }
+
+    public function attachtTestsToSchedule()
+    {
+        $data = ['attribute'=>'value']; //replace this with the data you want to insert 
+        $check = TestResults::findOrFail(5);
+        $check->events()->attach(2, $data);
+        return $check->events();
     }
 
     /**

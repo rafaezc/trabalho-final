@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="data_hora">Data e Hora</label>
                             <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" 
-                                value="2021-10-10T19:30" min="2018-06-07T70:00" max="2026-10-10T18:00" required>
+                                value="@php echo str_replace(" ", "T", date("Y-m-d h:i")) @endphp" min="2018-06-07T70:00" max="2026-10-10T18:00" required>
                         </div>
                     </div>
                 </div>

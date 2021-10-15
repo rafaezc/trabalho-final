@@ -33,7 +33,7 @@ Route::post('users/store', 'UserController@store')->name('users.store');
 
 Route::any('patients/search', 'PatientController@search')->name('patients.search');
 
-Route::delete('patients/delete/{id}', 'PatientController@destroy')->name('patients.destroy');
+Route::put('patients/delete/{id}', 'PatientController@destroy')->name('patients.destroy');
 
 Route::put('patients/update/{id}', 'PatientController@update')->name('patients.update');
 
@@ -49,10 +49,20 @@ Route::put('tests/update', 'TestController@update')->name('tests.update');
 
 Route::post('tests/store', 'TestController@store')->name('tests.store');
 
-Route::resource('schedules', 'ScheduleController');
+Route::any('pastschedules', 'ScheduleController@indexold')->name('schedules.indexold');
+
+Route::any('schedules', 'ScheduleController@index')->name('schedules.index');
 
 Route::delete('schedules', 'ScheduleController@destroy')->name('schedules.destroy');
 
 Route::put('schedules/update', 'ScheduleController@update')->name('schedules.update');
 
 Route::post('schedules/store', 'ScheduleController@store')->name('schedules.store');
+
+Route::resource('testresults', 'TestResultsController');
+
+Route::put('testresults/delete/{id}', 'TestResultsController@destroy')->name('testresults.destroy');
+
+Route::put('testresults/update/{id}', 'TestResultsController@update')->name('testresults.update');
+
+Route::post('testresults/store', 'TestResultsController@store')->name('testresults.store');

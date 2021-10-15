@@ -92,14 +92,15 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-        $users = User::all();
+        $user_id = $request->idup;
+        $user = User::find($user_id);
+
+        $users = User::where('id', '!=', $user_id)->get();
 
         if (!$users->contains('nome', $request->nome) 
-        || !$users->contains('email', $request->email) 
-        || !$users->contains('numero_conselho', $request->numero_conselho)) {
+        && !$users->contains('email', $request->email) 
+        && !$users->contains('numero_conselho', $request->numero_conselho)) {
 
-            $user_id = $request->idup;
-            $user = User::find($user_id);
             if ($request->senha == '') {
                 $user->update($request->except('senha'));
             } else {

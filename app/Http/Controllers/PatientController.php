@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Models\Schedule;
+use App\Models\User;
 
 class PatientController extends Controller
 {
@@ -93,7 +95,13 @@ class PatientController extends Controller
     public function show($id)
     {
         $patient = Patient::find($id);
-        return view('patients.profile', ['patient' => $patient]);
+
+        $userProfNames = User::all();
+
+        $patientSchedules = Schedule::where('paciente_id', '=', $id)->get();
+        // dd($patientSchedules);
+
+        return view('patients.profile', ['patient' => $patient, 'patientSchedules' => $patientSchedules, 'userProfNames' => $userProfNames]);
     }
 
     /**
@@ -116,12 +124,13 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $patients = Patient::all();
-
+        
         $patient = Patient::find($id);
+        
+        $patients = Patient::where('id', '!=', $id)->get();
 
         if (!$patients->contains('nome', $request->nome) 
-        || !$patients->contains('cpf', $request->cpf)) {
+        && !$patients->contains('cpf', $request->cpf)) {
             
             $request['usuario_id'] = 2; // inserir aqui a variavel que captura o id do usuario logado.
             // dd($patient_id);
@@ -146,8 +155,9 @@ class PatientController extends Controller
     public function destroy(Request $request, $id)
     {
         $patient = Patient::find($id);
-        $patient->delete();
-        return redirect()->route('patients.search')->with('toast_success', 'Paciente deletado com sucesso.');;
+        $request['status'] = "INATIVO";
+        $patient->update($request->only('status'));
+        return redirect()->route('patients.search')->with('toast_success', 'Paciente deletado com sucesso.');
     }
 
 }

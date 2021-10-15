@@ -47,6 +47,14 @@
                             <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" 
                                 value="" min="2021-06-07T70:00" max="2026-10-10T18:00">
                         </div>
+                        <div class="form-group">
+                            <label for="anotacoes">Anotações</label>
+                            <textarea type="text" class="form-control" id="anotacoes" name="anotacoes" rows="5">{{ $schedule['anotacoes'] }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="conclusoes">Conclusão</label>
+                            <textarea type="text" class="form-control" id="conclusoes" name="conclusoes" rows="5">{{ $schedule['conclusoes'] }}</textarea>
+                        </div>
                         <input name="idup" id="idup" type="hidden" value="">
                     </div>
                 </div>

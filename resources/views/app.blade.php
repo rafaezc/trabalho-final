@@ -23,8 +23,7 @@
         <header>
             <nav class="mb-5 navbar navbar-expand-md navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">
-                    <img src="/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-                    Bootstrap
+                    SMARP
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,8 +33,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/users">Usuários</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/schedules">Agenda</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agenda
+                                <i class="fas fa-angle-down"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="/schedules"><i class="fas fa-calendar-alt"></i> Sessões Futuras</a>
+                                <a class="dropdown-item" href="/pastschedules"><i class="fas fa-calendar-times"></i> Sessões Passadas</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pacientes
@@ -142,6 +147,8 @@
                                     nameFixer(rowInfo[1], rowInfo[2]);
                                     setDropdowns(rowInfo[1], rowInfo[2]);
                                     sendInputs(rowInfo);
+                                    textareaEditValues[0].innerHTML = rowInfo[4];
+                                    textareaEditValues[1].innerHTML = rowInfo[5];
                                 }
                                 if (url === "test" && rowInfo.length > 3) {
                                     userToUp.setAttribute("value", rowInfo[0]);
@@ -172,6 +179,8 @@
                                     nameFixer(rowInfo[1], rowInfo[2]);
                                     setDropdowns(rowInfo[1], rowInfo[2]);
                                     sendInputs(rowInfo);
+                                    textareaEditValues[0].innerHTML = rowInfo[4];
+                                    textareaEditValues[1].innerHTML = rowInfo[5];
                                 }
                                 if (url === "test" && rowInfo.length > 3) {
                                     userToUp.setAttribute("value", rowInfo[0]);

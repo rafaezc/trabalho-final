@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Test;
 
 class TestController extends Controller
@@ -91,13 +90,15 @@ class TestController extends Controller
      */
     public function update(Request $request)
     {
-        $tests = Test::all();
+
+        $test_id = $request->idup;
+        $test = Test::find($test_id);
+        
+        $tests = Test::where('id', '!=', $test_id)->get();
 
         if (!$tests->contains('nome', $request->nome)
-        || !$tests->contains('descricao', $request->descricao)) {
+        && !$tests->contains('descricao', $request->descricao)) {
 
-            $test_id = $request->idup;
-            $test = Test::find($test_id);
             // dd($request->all());
             $test->update($request->all());
 
