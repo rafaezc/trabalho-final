@@ -13,7 +13,6 @@
                     <div class="container">
                         <div class="form-group">
                             <label for="paciente_id">Paciente</label>
-                            {{-- selectpicker data-live-search="true" --}}
                             <select class="form-control select-filter" style="width: 100%" name="paciente_id" id="name_p_add" required>
                                 <option value="" disabled selected hidden>Selecione o paciente</option>
                                 @foreach ($patientnames as $patientname)
@@ -22,11 +21,9 @@
                                 @endif
                                 @endforeach
                             </select>
-                            {{-- <input type="text" class="form-control" id="name_p" name="nome_p"> --}}
                         </div>
                         <div class="form-group">
                             <label for="usuario_id">Profissional</label>                            
-                            {{-- <input type="text" class="form-control" id="nome_u" name="nome_u"> --}}
                             <select class="form-control" name="usuario_id" id="usuario_id" required>
                                 <option value="" disabled selected hidden>Selecione o profissional</option>
                                 @foreach ($usernames as $username)
@@ -39,7 +36,7 @@
                         <div class="form-group">
                             <label for="data_hora">Data e Hora</label>
                             <input type="datetime-local" class="form-control" id="data_hora" name="data_hora" 
-                                value="@php echo str_replace(" ", "T", date("Y-m-d h:i")) @endphp" min="2018-06-07T70:00" max="2026-10-10T18:00" required>
+                                value="@php echo str_replace(" ", "T", date("Y-m-d H:i", strtotime('-3 hours'))) @endphp" min="2018-06-07T70:00" max="2026-10-10T18:00" required>
                         </div>
                     </div>
                 </div>

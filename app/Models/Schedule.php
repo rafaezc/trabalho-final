@@ -18,5 +18,4 @@ class Schedule extends Model
     {
         return $this->belongsToMany(Test::class, 'resultado_teste', 'sessao_id', 'testes_id');
     }
-
 }

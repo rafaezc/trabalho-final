@@ -2,6 +2,8 @@
 
 @section('title', 'Agenda')
 
+@extends('header')
+
 @section('content')
     <div class="container mb-5">
         <h1>Agenda</h1>
@@ -36,10 +38,8 @@
                     <tbody>
                         @foreach ($schedules as $schedule)
                         <tr>
-                            <!-- fazer primeiro criar login/logout e permissoes de usuario, 
-                            terminar perfil do paciente(modais dos testes e configurar relatorio, add botao), 
-                            validação front(resultado testes e login), 
-                            retirar logs e comentarios -->
+                            <!-- terminar perfil do paciente(modais dos testes e configurar relatorio, add botao), 
+                            validação front(resultado testes) -->
                             <td hidden name="id" class="id">{{ $schedule['id'] }}</td>
                             @foreach ($patientnames as $patientname) 
                                 @if ($schedule['paciente_id'] == $patientname['id'])

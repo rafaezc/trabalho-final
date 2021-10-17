@@ -14,7 +14,6 @@
                     <div class="container">
                         <div class="delete-warning">
                             <div id="delete-testname-warning"></div>   
-                            {{-- Confirma a exlusão do teste ? --}}
                             <div>Essa ação é irreversível e não poderá ser desfeita.</div>        
                         </div>
                         <input name="iddel" id="iddel" type="hidden" value="">

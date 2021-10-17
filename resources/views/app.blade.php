@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
         
         <!-- Bootstrap Select -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"> 
@@ -19,45 +19,9 @@
         </title>
 
     </head>
-    <body>
+    <body id="xyz">
         <header>
-            <nav class="mb-5 navbar navbar-expand-md navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">
-                    SMARP
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users">Usuários</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agenda
-                                <i class="fas fa-angle-down"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/schedules"><i class="fas fa-calendar-alt"></i> Sessões Futuras</a>
-                                <a class="dropdown-item" href="/pastschedules"><i class="fas fa-calendar-times"></i> Sessões Passadas</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pacientes
-                                <i class="fas fa-angle-down"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/patients/search"><i class="fas fa-search"></i> Buscar pacientes</a>
-                                <a class="dropdown-item" href="/patients/add" type="button" data-toggle="modal" 
-                                    data-target="#addPatientModal" id="patient-add"><i class="fas fa-plus"></i> Adicionar paciente</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/tests">Testes</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            @yield('header')
         </header>
 
         <main>
@@ -67,13 +31,13 @@
         </main>
 
         <footer>
-            <div class="mt-5">
-                <span>&nbsp;</span> <!--definir o que será feito no rodapé de uma vez-->
-            </div>
+            {{-- <div class="mt-5">
+                <span>&nbsp;</span> 
+            </div> --}}
         </footer>
 
         @include('sweetalert::alert')
-
+        
         <!-- Modals -->
         @include('modals.patient.addpatientmodal', ['modal_id' => 'addPatientModal', 'modal_title' => 'Adicionar paciente'])
 
@@ -88,7 +52,6 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $(".select-filter").select2();
-                // $(".select-filter").val(0).hide(); 
             });
 
             if (window.location.pathname.includes('/patients/')) {
@@ -96,7 +59,9 @@
             } else {
                 var url = window.location.pathname.slice(0, -1).replace("/", ""); 
             }
-            var table = document?.getElementById(url + "-data"); //-- adicionar ? antes de todo document para esconder "erros" do console
+            console.log(url);
+            var xyz = document?.getElementById("xyz");
+            var table = document?.getElementById(url + "-data"); 
             var rows = table?.getElementsByTagName("tr");
             var rowInfo = [];
             var buttonArea = document?.getElementById("button-box");
@@ -115,6 +80,14 @@
             var nameToDel = document?.getElementById("delete-" + url +"name-warning");
             var openProfile = document?.getElementById("open-btn");
             console.log(openProfile);
+
+            if (url !== 'logi') {
+                xyz.classList.remove("login-background");
+                xyz.classList.add("login-background-card");
+            } else {
+                xyz.classList.remove("login-background-card")
+                xyz.classList.add("login-background");
+            }
 
             if (buttons && buttons.length > 2) {
                 for(var i = 0; i < buttons.length; i++) {
@@ -418,8 +391,6 @@
                         break;
                 }
             }
-            // criar function para conferir se as senhas batem
-
             // jogar para um arquivo separado quando terminar de mexer no script
         </script>
     </body>

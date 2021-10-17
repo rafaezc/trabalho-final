@@ -14,7 +14,6 @@
                     <div class="container">
                         <div class="delete-warning">
                             <div id="delete-schedulename-warning"></div> 
-                            {{-- Confirma a exlusão da sessão ?    --}}
                             <div>Essa ação é irreversível e não poderá ser desfeita.</div>        
                         </div>
                         <input name="iddel" id="iddel" type="hidden" value="" >

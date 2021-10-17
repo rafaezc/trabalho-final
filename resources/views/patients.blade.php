@@ -2,6 +2,8 @@
 
 @section('title', 'Pacientes')
 
+@extends('header')
+
 @section('content')
     <div class="container mb-5">
         <h1>Busca Pacientes</h1>

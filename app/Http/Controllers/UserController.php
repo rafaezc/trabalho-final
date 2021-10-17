@@ -21,8 +21,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();     
-        return view('users', ['users' => $users]);
+        if (session()->get('user_code') != 'M1') {
+
+            return redirect()->back()->with('toast_error', 'Não possui permissão de acesso!');
+
+        } else {
+
+            $users = User::all();     
+
+            return view('users', ['users' => $users]);
+        }
     }
 
     /**
@@ -50,14 +58,13 @@ class UserController extends Controller
         && !$users->contains('numero_conselho', $request->numero_conselho)) {
 
             $this->repository->create($request->all());
-            // dd($request->all());
-            return redirect()->route('users.index')->with('toast_success', 'Usuário cadastrado com sucesso.');
+           
+            return redirect()->back()->with('toast_success', 'Usuário cadastrado com sucesso.');
 
         } else {
 
-            return redirect()->route('users.index')->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
+            return redirect()->back()->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
         }
-
     }
 
     /**
@@ -91,8 +98,8 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-
         $user_id = $request->idup;
+
         $user = User::find($user_id);
 
         $users = User::where('id', '!=', $user_id)->get();
@@ -102,18 +109,20 @@ class UserController extends Controller
         && !$users->contains('numero_conselho', $request->numero_conselho)) {
 
             if ($request->senha == '') {
+
                 $user->update($request->except('senha'));
+
             } else {
+
                 $user->update($request->all());
             }
 
-            return redirect()->route('users.index')->with('toast_success', 'Usuário editado com sucesso.');
+            return redirect()->back()->with('toast_success', 'Usuário editado com sucesso.');
 
         } else {
 
-            return redirect()->route('users.index')->with('toast_info', 'Tentativa de edição com dados duplicados!');
+            return redirect()->back()->with('toast_info', 'Tentativa de edição com dados duplicados!');
         }
-
     }
 
     /**
@@ -127,7 +136,7 @@ class UserController extends Controller
         $user_id = $request->iddel;
         $user = User::find($user_id);
         $user->delete();
-        return redirect()->route('users.index')->with('toast_success', 'Usuário deletado com sucesso.');
+        return redirect()->back()->with('toast_success', 'Usuário deletado com sucesso.');
     }
 
 }

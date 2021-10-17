@@ -30,10 +30,15 @@ class ScheduleController extends Controller
         $usernames = User::all();
 
         $patientnames = Patient::all();
-        // dd($schedules);    
+        
         return view('schedules', ['schedules' => $schedules, 'usernames' => $usernames, 'patientnames' => $patientnames]);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indexold()
     {
         $schedulesOlds = Schedule::where('data_hora', '<', date('Y-m-d h:i:S'))->orderby('data_hora', 'asc')->paginate(20);
@@ -41,7 +46,7 @@ class ScheduleController extends Controller
         $usernamesOlds = User::all();
 
         $patientnamesOlds = Patient::all();
-        // dd($patientnames);    
+
         return view('pastschedules', ['schedulesOlds' => $schedulesOlds, 'usernamesOlds' => $usernamesOlds, 'patientnamesOlds' => $patientnamesOlds]);
     }
     /**
@@ -69,18 +74,23 @@ class ScheduleController extends Controller
         && !$schedules->contains('data_hora', $request->data_hora)) {
             
             if ($request->anotacoes == '') {
+
                 $this->repository->create($request->except('anotacoes'));
+
             } else if ($request->conclusoes == '') {
+
                 $this->repository->create($request->except('conclusoes'));
+
             } else {
+
                 $this->repository->create($request->all());
             }
 
-            return redirect()->route('scheules.index')->with('toast_success', 'Sessão cadastrada com sucesso.');
+            return redirect()->back()->with('toast_success', 'Sessão cadastrada com sucesso.');
 
         } else {
 
-            return redirect()->route('schedules.index')->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
+            return redirect()->back->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
         }
     }
 
@@ -116,6 +126,7 @@ class ScheduleController extends Controller
     public function update(Request $request)
     {
         $schedule_id = $request->idup;
+
         $schedule = Schedule::find($schedule_id);
 
         $schedules = Schedule::where('id', '!=', $schedule_id)->get();
@@ -125,21 +136,22 @@ class ScheduleController extends Controller
         || !$schedules->contains('data_hora', $request->data_hora)) {
             
             if ($request->anotacoes == '') {
-                // dd($request);
+                
                 $schedule->update($request->except('anotacoes'));
+
             } else if ($request->conclusoes == '') {
-                // dd($request);
+                
                 $schedule->update($request->except('conclusoes'));
             } else {
-                // dd($request);
+                
                 $schedule->update($request->all());
             }
 
-            return redirect()->route('schedules.index')->with('toast_success', 'Sessão editada com sucesso.');
+            return redirect()->back()->with('toast_success', 'Sessão editada com sucesso.');
 
         } else {
 
-            return redirect()->route('schedules.index')->with('toast_info', 'Tentativa de edição com dados duplicados!');
+            return redirect()->back()->with('toast_info', 'Tentativa de edição com dados duplicados!');
         }
     }
 
@@ -160,8 +172,18 @@ class ScheduleController extends Controller
     public function destroy(Request $request)
     {
         $schedule_id = $request->iddel;
+
         $schedule = Schedule::find($schedule_id);
-        $schedule->delete();
-        return redirect()->route('schedules.index')->with('toast_success', 'Sessão deletada com sucesso');
+
+            if ($schedule->anotacoes == '' && $schedule->conclusoes == '') {
+                
+                $schedule->delete();
+
+                return redirect()->back()->with('toast_success', 'Sessão deletada com sucesso');
+        
+            } else {
+
+                return redirect()->back()->with('toast_error', 'Não é permitido deletar uma sessão já atendida!');
+            }
     }
 }

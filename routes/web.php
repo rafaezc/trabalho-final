@@ -13,56 +13,68 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// discriminar todas as rotas .index
-
 Route::get('/', function () {
-    return view('app');
+    return redirect('login');
 });
 
-Route::resource('users', 'UserController');
+Route::get('/login', function () {
+    return view('login');
+});
 
-Route::delete('users', 'UserController@destroy')->name('users.destroy');
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
-Route::put('users/update', 'UserController@update')->name('users.update');
+Route::group(['middleware' => ['auth']], function () {
+   
+    Route::resource('users', 'UserController');
 
-Route::post('users/store', 'UserController@store')->name('users.store');
+    Route::delete('users', 'UserController@destroy')->name('users.destroy');
 
-// Route::resource('patients', 'PatientController');
+    Route::put('users/update', 'UserController@update')->name('users.update');
 
-// Route::any('patients/searchi', 'PatientController@index')->name('patients.index');
+    Route::post('users/store', 'UserController@store')->name('users.store');
 
-Route::any('patients/search', 'PatientController@search')->name('patients.search');
+    Route::any('patients/search', 'PatientController@search')->name('patients.search');
 
-Route::put('patients/delete/{id}', 'PatientController@destroy')->name('patients.destroy');
+    Route::put('patients/delete/{id}', 'PatientController@destroy')->name('patients.destroy');
 
-Route::put('patients/update/{id}', 'PatientController@update')->name('patients.update');
+    Route::put('patients/update/{id}', 'PatientController@update')->name('patients.update');
 
-Route::any('patients/show/{id}', 'PatientController@show')->name('patients.show');
+    Route::any('patients/show/{id}', 'PatientController@show')->name('patients.show');
 
-Route::post('patients/store', 'PatientController@store')->name('patients.store');
+    Route::post('patients/store', 'PatientController@store')->name('patients.store');
 
-Route::resource('tests', 'TestController');
+    Route::resource('tests', 'TestController');
 
-Route::delete('tests', 'TestController@destroy')->name('tests.destroy');
+    Route::delete('tests', 'TestController@destroy')->name('tests.destroy');
 
-Route::put('tests/update', 'TestController@update')->name('tests.update');
+    Route::put('tests/update', 'TestController@update')->name('tests.update');
 
-Route::post('tests/store', 'TestController@store')->name('tests.store');
+    Route::post('tests/store', 'TestController@store')->name('tests.store');
 
-Route::any('pastschedules', 'ScheduleController@indexold')->name('schedules.indexold');
+    Route::any('pastschedules', 'ScheduleController@indexold')->name('schedules.indexold');
 
-Route::any('schedules', 'ScheduleController@index')->name('schedules.index');
+    Route::any('schedules', 'ScheduleController@index')->name('schedules.index');
 
-Route::delete('schedules', 'ScheduleController@destroy')->name('schedules.destroy');
+    Route::delete('schedules', 'ScheduleController@destroy')->name('schedules.destroy');
 
-Route::put('schedules/update', 'ScheduleController@update')->name('schedules.update');
+    Route::put('schedules/update', 'ScheduleController@update')->name('schedules.update');
 
-Route::post('schedules/store', 'ScheduleController@store')->name('schedules.store');
+    Route::post('schedules/store', 'ScheduleController@store')->name('schedules.store');
 
-Route::resource('testresults', 'TestResultsController');
+    Route::resource('testresults', 'TestResultsController');
 
-Route::put('testresults/delete/{id}', 'TestResultsController@destroy')->name('testresults.destroy');
+    Route::put('testresults/delete/{id}', 'TestResultsController@destroy')->name('testresults.destroy');
 
-Route::put('testresults/update/{id}', 'TestResultsController@update')->name('testresults.update');
+    Route::put('testresults/update/{id}', 'TestResultsController@update')->name('testresults.update');
 
-Route::post('testresults/store', 'TestResultsController@store')->name('testresults.store');
+    Route::post('testresults/store', 'TestResultsController@store')->name('testresults.store');
+
+});
+
+Route::any('login', 'AuthController@index')->name('login.index');
+
+Route::post('login', 'AuthController@playball')->name('login.playball');
+
+Route::any('logout', 'AuthController@logout')->name('login.logout');

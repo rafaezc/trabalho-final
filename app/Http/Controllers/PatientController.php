@@ -29,26 +29,23 @@ class PatientController extends Controller
             $patients = Patient::where('nome', 'LIKE', "%{$request->search}%")
                                 ->orwhere('cpf', 'LIKE', "%{$request->search}%")
                                 ->paginate(20);
-            // if ($patients == '') {
-                // return redirect()->route('patients.index');    
-            // } else {
-                return view('patients', ['patients' => $patients, 'filter' => $filter]);
-            // }
+
+            return view('patients', ['patients' => $patients, 'filter' => $filter]);
+            
         } else {
+
             return view('patients', ['patients' => '']);
         }
-        // dd($request->search);
-        // return view('patients', ['patients' => $patients]);
-        // return view('patients.index', compact('patients'));
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        // $patients = '';
-        // $patients = Patient::paginate(10);
-        // $usernames = User::pluck('nome', 'id');     
-        // return view('patients', ['patients' => $patients]);
-        // 'usernames' => $usernames
+        // 
     }
 
     /**
@@ -74,8 +71,8 @@ class PatientController extends Controller
         if (!$patients->contains('nome', $request->nome) 
         && !$patients->contains('cpf', $request->cpf)) {
                 
-            $request['usuario_id'] = 2; // inserir aqui a variavel que captura o id do usuario logado.
-            // dd($request);
+            $request['usuario_id'] = session()->get('user_id'); // inserir aqui a variavel que captura o id do usuario logado.
+            // dd(session()->get('user_id'));
             $this->repository->create($request->all());
 
             return redirect()->route('patients.search')->with('toast_success', 'Paciente cadastrado com sucesso.');
@@ -99,7 +96,6 @@ class PatientController extends Controller
         $userProfNames = User::all();
 
         $patientSchedules = Schedule::where('paciente_id', '=', $id)->get();
-        // dd($patientSchedules);
 
         return view('patients.profile', ['patient' => $patient, 'patientSchedules' => $patientSchedules, 'userProfNames' => $userProfNames]);
     }
@@ -132,7 +128,7 @@ class PatientController extends Controller
         if (!$patients->contains('nome', $request->nome) 
         && !$patients->contains('cpf', $request->cpf)) {
             
-            $request['usuario_id'] = 2; // inserir aqui a variavel que captura o id do usuario logado.
+            $request['usuario_id'] = session()->get('user_id'); // inserir aqui a variavel que captura o id do usuario logado.
             // dd($patient_id);
             // dd($request->all());
             $patient->update($request->all());
@@ -154,10 +150,20 @@ class PatientController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $patient = Patient::find($id);
-        $request['status'] = "INATIVO";
-        $patient->update($request->only('status'));
-        return redirect()->route('patients.search')->with('toast_success', 'Paciente deletado com sucesso.');
+        if (session()->get('user_code') != 'S1') { 
+
+            $patient = Patient::find($id);
+
+            $request['status'] = "INATIVO";
+
+            $patient->update($request->only('status'));
+
+            return redirect()->route('patients.search')->with('toast_success', 'Paciente deletado com sucesso.');
+        
+        } else {
+
+            return redirect()->route('patients.search')->with('toast_error', 'Não possui permissão para deletar pacientes!');
+        }
     }
 
 }

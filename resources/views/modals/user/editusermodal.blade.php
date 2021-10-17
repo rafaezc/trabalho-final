@@ -51,10 +51,6 @@
                             <label for="password">Nova senha</label>
                             <input type="password" class="form-control" id="password" name="senha" minlength="8" maxlength="40" placeholder="Crie uma nova senha com 8 caracteres no mínimo">
                         </div>
-                        <div class="form-group">
-                            <label for="repeat-pass">Confirmar nova senha</label>
-                            <input type="password" class="form-control" id="repeat-pass" name="repeat-pass" minlength="8" maxlength="40" placeholder="Repita a senha infomada no campo anterior">
-                        </div>
                         <input name="idup" id="idup" type="hidden" value="">
                     </div>
                 </div>

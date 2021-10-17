@@ -2,6 +2,8 @@
 
 @section('title', 'Paciente '. $patientName = isset($patient['nome']) ? $patient['nome'] : '')
 
+@extends('header')
+
 @section('content')
     <div class="container mb-5">
         <div class="row mx-5">
@@ -90,23 +92,15 @@
                     @foreach ($patientSchedules as $patientSchedule)
                     <div class="card mb-4">
                         <h5 class="mb-0">
-                            <button class="btn btn-link color-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                {{ "Sessão: " . implode('/', array_reverse(explode('-', substr($patientSchedule['data_hora'], 0, -9)))) }}
-                            </button>
-                            <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
-                                data-toggle="modal" data-target="#deleteTestResultModal" id="testresult-delete">
-                                <i class="fas fa-trash-alt"></i>&nbsp;Deletar Teste
-                            </button>
-                            <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
-                                data-toggle="modal" data-target="#editTestResultModal" id="testresult-edit">
-                                <i class="fas fa-edit"></i>&nbsp;Editar Teste
+                            <button class="btn btn-link color-link" data-toggle="collapse" data-target="@php echo "#collapse".$patientSchedule->id @endphp" aria-expanded="false" aria-controls="@php echo "collapse".$patientSchedule->id @endphp">
+                                {{ " Sessão: " . implode('/', array_reverse(explode('-', substr($patientSchedule['data_hora'], 0, -9)))) }}
                             </button>
                             <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
                                 data-toggle="modal" data-target="#addTestResultModal" id="testresult-add"> 
                                 <i class="fas fa-plus"></i>&nbsp;Adicionar Teste
                             </button>
                         </h5>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div id="@php echo "collapse".$patientSchedule->id @endphp" class="collapse" aria-labelledby="@php echo "heading".$patientSchedule->id @endphp" data-parent="#accordion">
                             <div class="card-body">
                                 <div class="container">
                                     <div class="row">

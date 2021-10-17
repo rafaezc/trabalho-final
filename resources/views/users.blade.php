@@ -2,6 +2,8 @@
 
 @section('title', 'Usuários')
 
+@extends('header')
+
 @section('content')
     <div class="container mb-5">
         <h1>Usuários</h1>

@@ -21,11 +21,17 @@ class TestResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $schedule = $this->repository->find($id);
-        $testResults = $schedule->testsResultsSchedule()->get();
+        // $patientScheduleTests = Test::all();
+
+        $scheduleTest = $this->repository->find(1);
+
+        $testResults = $scheduleTest->testsResultsSchedule()->get();
+
         dd($testResults);
+
+        // return view('patients.profile', ['patientScheduleTests' => $patientScheduleTests]);
     }
 
     /**
@@ -106,5 +112,4 @@ class TestResultsController extends Controller
         $testResults->delete();
         return redirect()->route('patients.show')->with('toast_success', 'Teste deletado com sucesso.');
     }
-    
 }

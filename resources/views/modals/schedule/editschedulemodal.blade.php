@@ -17,22 +17,17 @@
                     <div class="container">
                         <div class="form-group">
                             <label for="paciente_id">Paciente</label>
-                            {{-- <input type="text" class="form-control" id="search" name="search" onkeyup="filter()"> --}}
-                            {{-- style="width: 100%; padding: .375rem .75rem; font-weight: 400;" --}}
                             <select class="form-control select-filter" style="width: 100%" name="paciente_id" id="name_p_edit">
                                 <option value="" disabled selected hidden>Selecione o paciente</option>
-                                {{-- <input type="text" id="search" name="search" style="margin: 10px;width: 165px;" onkeyup="filter()"> --}}
                                 @foreach ($patientnames as $patientname)
                                 @if ($patientname['status'] !== 'INATIVO')
                                 <option value="{{ $patientname->id }}">{{ $patientname->nome }}</option>
                                 @endif
                                 @endforeach
                             </select>
-                            {{-- <input type="text" class="form-control" id="name_p" name="nome_p"> --}}
                         </div>
                         <div class="form-group">
                             <label for="usuario_id">Profissional</label>                            
-                            {{-- <input type="text" class="form-control" id="nome_u" name="nome_u"> --}}
                             <select class="form-control" name="usuario_id" id="name_u">
                                 <option value="" disabled selected hidden>Selecione o profissional</option>
                                 @foreach ($usernames as $username)
@@ -49,11 +44,13 @@
                         </div>
                         <div class="form-group">
                             <label for="anotacoes">Anotações</label>
-                            <textarea type="text" class="form-control" id="anotacoes" name="anotacoes" rows="5">{{ $schedule['anotacoes'] }}</textarea>
+                            @php $disabled = session()->get('user_code') == 'S1' ? 'disabled' : '' @endphp
+                            <textarea type="text" class="form-control" id="anotacoes" name="anotacoes" rows="5" @php echo $disabled @endphp>{{ $schedule['anotacoes'] }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="conclusoes">Conclusão</label>
-                            <textarea type="text" class="form-control" id="conclusoes" name="conclusoes" rows="5">{{ $schedule['conclusoes'] }}</textarea>
+                            @php $disabled = session()->get('user_code') == 'S1' ? 'disabled' : '' @endphp  
+                            <textarea type="text" class="form-control" id="conclusoes" name="conclusoes" rows="5" @php echo $disabled @endphp>{{ $schedule['conclusoes'] }}</textarea>
                         </div>
                         <input name="idup" id="idup" type="hidden" value="">
                     </div>

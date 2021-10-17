@@ -21,7 +21,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $tests = Test::paginate(15);     
+        $tests = Test::paginate(10);     
         return view('tests', ['tests' => $tests]);
     }
 
@@ -49,12 +49,12 @@ class TestController extends Controller
         && !$tests->contains('descricao', $request->descricao)) {
 
             $this->repository->create($request->all());
-            // dd($request->all());
-            return redirect()->route('tests.index')->with('toast_success', 'Teste cadastrado com sucesso.');
+
+            return redirect()->back()->with('toast_success', 'Teste cadastrado com sucesso.');
 
         } else {
 
-            return redirect()->route('tests.index')->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
+            return redirect()->back()->with('toast_info', 'Tentativa de cadastro com dados duplicados!');
         }
 
     }
@@ -90,25 +90,23 @@ class TestController extends Controller
      */
     public function update(Request $request)
     {
-
         $test_id = $request->idup;
+
         $test = Test::find($test_id);
         
         $tests = Test::where('id', '!=', $test_id)->get();
 
         if (!$tests->contains('nome', $request->nome)
-        && !$tests->contains('descricao', $request->descricao)) {
+        || !$tests->contains('descricao', $request->descricao)) {
 
-            // dd($request->all());
             $test->update($request->all());
 
-            return redirect()->route('tests.index')->with('toast_success', 'Teste editado com sucesso.');
+            return redirect()->back()->with('toast_success', 'Teste editado com sucesso.');
 
         } else {
 
-            return redirect()->route('tests.index')->with('toast_info', 'Tentativa de edição com dados duplicados!');;
+            return redirect()->back()->with('toast_info', 'Tentativa de edição com dados duplicados!');;
         }
-       
     }
 
     /**
@@ -119,10 +117,19 @@ class TestController extends Controller
      */
     public function destroy(Request $request)
     {
-        $test_id = $request->iddel;
-        $test = Test::find($test_id);
-        $test->delete();
-        return redirect()->route('tests.index')->with('toast_success', 'Teste deletado com sucesso.');;
-    }
+        if (session()->get('user_code') != 'S1') {
 
+            $test_id = $request->iddel;
+
+            $test = Test::find($test_id);
+            
+            $test->delete();
+            
+            return redirect()->back()->with('toast_success','Teste deletado com sucesso.');
+
+        } else {
+
+            return redirect()->back()->with('toast_error', 'Não possui permissão para deletar testes!');
+        }
+    }
 }

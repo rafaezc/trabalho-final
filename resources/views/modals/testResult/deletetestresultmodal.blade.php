@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="delete-warning">
-                            <div id="delete-username-warning">Confirma a exlusão do paciente {{ $patient->nome }} ?</div>    
+                            <div id="delete-username-warning">Confirma a exlusão do teste da sesssao do dia tal {{ $patient->nome }} ?</div>    
                             <div>Essa ação é irreversível e não poderá ser desfeita.</div>        
                         </div>
                     </div>    

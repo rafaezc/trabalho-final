@@ -2,6 +2,8 @@
 
 @section('title', 'Agenda')
 
+@extends('header')
+
 @section('content')
     <div class="container mb-5">
         <h1>Sessões Passadas</h1>
