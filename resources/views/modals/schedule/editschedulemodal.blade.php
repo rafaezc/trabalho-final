@@ -17,7 +17,7 @@
                     <div class="container">
                         <div class="form-group">
                             <label for="paciente_id">Paciente</label>
-                            <select class="form-control select-filter" style="width: 100%" name="paciente_id" id="name_p_edit">
+                            <select class="form-control select-filter" style="width: 100%" id="name_p_edit" name="paciente_id">
                                 <option value="" disabled selected hidden>Selecione o paciente</option>
                                 @foreach ($patientnames as $patientname)
                                 @if ($patientname['status'] !== 'INATIVO')

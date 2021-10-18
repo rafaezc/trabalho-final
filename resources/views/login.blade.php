@@ -11,7 +11,7 @@
                         <h3 class="text-center my-4">SMARP</h3>
                     </div>
                     <div class="card-body login-background-card">  
-                        <form method="post" action="{{ route('login.playball') }}" id="logForm">
+                        <form method="post" action="{{ route('login.authenticate') }}" id="logForm">
                         @csrf
                         <div class="form-group">
                             <label for="email">E-mail</label>

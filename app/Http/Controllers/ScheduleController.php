@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Patient;
-use App\Models\TestResults;
-
-// Deixar o controller da agenda rodando liso
 class ScheduleController extends Controller
 {
     private $repository;
@@ -153,14 +150,6 @@ class ScheduleController extends Controller
 
             return redirect()->back()->with('toast_info', 'Tentativa de edição com dados duplicados!');
         }
-    }
-
-    public function attachtTestsToSchedule()
-    {
-        $data = ['attribute'=>'value']; //replace this with the data you want to insert 
-        $check = TestResults::findOrFail(5);
-        $check->events()->attach(2, $data);
-        return $check->events();
     }
 
     /**

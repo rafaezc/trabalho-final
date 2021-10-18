@@ -1,4 +1,4 @@
-<form action="{{ route('testresults.destroy', $patientSchedule->id) }}" method="post">
+<form action="{{ route('patients.deletetestorschedule', $patientSchedule->id) }}" method="post">
     <div class="modal fade" id="{{ $modal_id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -9,11 +9,12 @@
                     </button>
                 </div>
                 @csrf
-                @method('put')
+                @method('delete')
                 <div class="modal-body">
                     <div class="container">
                         <div class="delete-warning">
-                            <div id="delete-username-warning">Confirma a exlusão do teste da sesssao do dia tal {{ $patient->nome }} ?</div>    
+                            <div id="delete-username-warning">Confirma a exlusão do teste da sesssão do paciente {{ $patient->nome }} ?</div>
+                                {{-- {{ $patientScheduleTest->nome }}      --}}
                             <div>Essa ação é irreversível e não poderá ser desfeita.</div>        
                         </div>
                     </div>    

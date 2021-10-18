@@ -19,7 +19,7 @@
         </title>
 
     </head>
-    <body id="xyz">
+    <body id="xcv">
         <header>
             @yield('header')
         </header>
@@ -60,7 +60,7 @@
                 var url = window.location.pathname.slice(0, -1).replace("/", ""); 
             }
             console.log(url);
-            var xyz = document?.getElementById("xyz");
+            var xcv = document?.getElementById("xcv");
             var table = document?.getElementById(url + "-data"); 
             var rows = table?.getElementsByTagName("tr");
             var rowInfo = [];
@@ -81,12 +81,13 @@
             var openProfile = document?.getElementById("open-btn");
             console.log(openProfile);
 
+            console.log(url);
             if (url !== 'logi') {
-                xyz.classList.remove("login-background");
-                xyz.classList.add("login-background-card");
+                xcv.classList.remove("login-background");
+                xcv.classList.add("login-background-card");
             } else {
-                xyz.classList.remove("login-background-card")
-                xyz.classList.add("login-background");
+                xcv.classList.remove("login-background-card")
+                xcv.classList.add("login-background");
             }
 
             if (buttons && buttons.length > 2) {
@@ -391,7 +392,8 @@
                         break;
                 }
             }
-            // jogar para um arquivo separado quando terminar de mexer no script
+            //--- rancar os logs
+            //--- jogar para um arquivo separado quando terminar de mexer no script
         </script>
     </body>
 </html>

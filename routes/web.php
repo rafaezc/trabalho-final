@@ -63,18 +63,22 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('schedules/store', 'ScheduleController@store')->name('schedules.store');
 
-    Route::resource('testresults', 'TestResultsController');
+    // Route::resource('testresults', 'TestResultsController');
 
-    Route::put('testresults/delete/{id}', 'TestResultsController@destroy')->name('testresults.destroy');
+    Route::delete('patients/deletetestorschedule/{id}', 'PatientController@deletetestorschedule')->name('patients.deletetestorschedule');
 
-    Route::put('testresults/update/{id}', 'TestResultsController@update')->name('testresults.update');
+    Route::put('patients/updatetestorschedule/{id}', 'PatientController@updatetestorschedule')->name('patients.updatetestorschedule');
 
-    Route::post('testresults/store', 'TestResultsController@store')->name('testresults.store');
+    Route::post('patients/storetestorschedule/{id}', 'PatientController@storetestorschedule')->name('patients.storetestorschedule');
 
 });
 
 Route::any('login', 'AuthController@index')->name('login.index');
 
-Route::post('login', 'AuthController@playball')->name('login.playball');
+Route::post('', 'AuthController@authenticate')->name('login.authenticate');
 
 Route::any('logout', 'AuthController@logout')->name('login.logout');
+
+Route::get('/reports', function () {
+    return view('reports');
+});

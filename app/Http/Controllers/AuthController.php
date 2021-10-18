@@ -14,7 +14,7 @@ class AuthController extends Controller
         return view('login');
     }  
      
-    public function playball(Request $request)
+    public function authenticate(Request $request)
     {
         $request->only('email', 'senha');
 

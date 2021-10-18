@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="container"> <!-- terminar os ajustes no perfil do paciente, parte da sessao -->
+    <div class="container"> 
         <div class="row mx-5">
             <div class="col-md-12">
                 <div id="accordion">
@@ -127,6 +127,56 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- @dd($patientScheduleTests) --}}
+                        @foreach ($testResults as $testResult)
+                        @if ($testResult->sessao_id == $patientSchedule->id)
+                        @foreach ($patientScheduleTests as $patientScheduleTest) 
+                        @if ($testResult->teste_id == $patientScheduleTest->id)  
+                            @php $testResult['nome_teste'] = $patientScheduleTest['nome'] @endphp
+                        @endif
+                        @endforeach
+                        {{-- @if ($patientScheduleTest['id'] == $testResult->teste_id && $patientSchedule['id'] == $testResult->teste_id)  --}}
+                        <div class="card mb-4">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link color-link" data-toggle="collapse" data-target="@php echo "#collapse".$patientSchedule->id.$testResult->teste_id @endphp" aria-expanded="false" aria-controls="@php echo "collapse".$patientSchedule->id.$testResult->teste_id @endphp">
+                                    {{ $testResult['nome_teste'] }}
+                                </button>
+                                <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
+                                    data-toggle="modal" data-target="#deleteTestResultModal" id="testresult-delete"> 
+                                    <i class="fas fa-trash-alt"></i>&nbsp;Deletar Teste
+                                </button>
+                                <button type="button" class="btn btn-primary btn-right ml-2 mb-1"  
+                                    data-toggle="modal" data-target="#editTestResultModal" id="testresult-edit"> 
+                                    <i class="fas fa-edit"></i></i>&nbsp;Editar Teste
+                                </button>
+                            </h5>
+                            <div id="@php echo "collapse".$patientSchedule->id.$testResult->teste_id @endphp" class="collapse" aria-labelledby="@php echo "heading".$patientSchedule->id.$testResult->teste_id @endphp" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="test-name">Teste</label>
+                                                    <input type="text" class="form-control" id="teste-name" name="teste-nome" value="@php echo $patientName = isset($patient['nome']) ? $patient['nome'] : '' @endphp" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="percentil">Percentil</label>
+                                                    <input type="text" class="form-control" id="percentil" name="percentil" value="@php echo $patientDataNasc = isset($patient['data_nascimento']) ? $patient['data_nascimento'] : '' @endphp" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comentario">Comentario</label>
+                                            <textarea type="text" class="form-control" id="comentario" name="comentario" rows="3" readonly>@php echo $patientConc = isset($patientSchedule['conclusoes']) ? $patientSchedule['conclusoes'] : '' @endphp</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @endforeach
                     </div>
                     @endforeach
                 </div>

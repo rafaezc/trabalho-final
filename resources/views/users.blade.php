@@ -10,7 +10,7 @@
     </div>
     <div class="container">
         <div class="row ml-auto mb-5">
-            <div class="col-md-12" id="button-box"> <!-- definir tamanho das colunas -->
+            <div class="col-md-12" id="button-box">
                 <button type="button" class="btn btn-primary btn-right ml-2 mb-1"
                     data-toggle="modal" data-target="#deleteUserModal" id="user-delete">
                     <i class="fas fa-trash-alt"></i>&nbsp;Deletar

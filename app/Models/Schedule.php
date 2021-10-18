@@ -14,8 +14,8 @@ class Schedule extends Model
         'usuario_id', 'paciente_id', 'data_hora', 'anotacoes', 'conclusoes'
     ];
 
-    public function testsResultsSchedule()
+    public function tests()
     {
-        return $this->belongsToMany(Test::class, 'resultado_teste', 'sessao_id', 'testes_id');
+        return $this->belongsToMany('App\Models\Test','resultado_teste', 'teste_id', 'sessao_id')->withPivot('data', 'percentil', 'comentario');
     }
 }

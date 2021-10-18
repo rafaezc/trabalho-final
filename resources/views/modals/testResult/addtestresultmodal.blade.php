@@ -1,4 +1,4 @@
-<form action="{{ route('testresults.store') }}" method="post" id="add-form">
+<form action="{{ route('patients.storetestorschedule', $patientSchedule->id) }}" method="post" id="add-form">
     <div class="modal fade" id="{{ $modal_id }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -15,11 +15,11 @@
                             <div class="form-group col-md-6">
                                 <div class="form-group">
                                     <label for="teste_id">Teste</label>
-                                    <select class="form-control select-filter" style="width: 100%" name="teste_id" id="teste_add" required>
+                                    <select class="form-control select-filter" style="width: 100%" id="test_s_add" name="teste_id" required>
                                         <option value="" disabled selected hidden>Selecione o teste</option>
-                                        {{-- @foreach ($patientScheduleTests as $patientScheduleTest) --}}
-                                        {{-- <option value="{{ $patientScheduleTest->id }}">{{ $patientScheduleTest->nome }}</option> --}}
-                                        {{-- @endforeach --}}
+                                        @foreach ($patientScheduleTests as $patientScheduleTest)
+                                        <option value="{{ $patientScheduleTest->id }}">{{ $patientScheduleTest->nome }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -31,8 +31,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="comentarios">Observações</label>
-                            <textarea type="text" class="form-control" id="comentarios" name="comentarios" rows="5"></textarea>
+                            <label for="comentario">Comentário</label>
+                            <textarea type="text" class="form-control" id="comentario" name="comentario" rows="5"></textarea>
                         </div>
                     </div>
                 </div>

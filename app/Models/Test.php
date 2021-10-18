@@ -14,8 +14,8 @@ class Test extends Model
         'nome', 'descricao', 'cadastrado_em'
     ];
 
-    public function testsResultsTest()
+    public function schedules()
     {
-        return $this->belongsToMany(Schedule::class, 'resultado_teste', 'sessao_id', 'testes_id');
+        return $this->belongsToMany('App\Models\Schedule','resultado_teste', 'teste_id', 'sessao_id')->withPivot('data', 'percentil', 'comentario');
     }
 }

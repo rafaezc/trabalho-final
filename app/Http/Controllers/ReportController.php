@@ -3,27 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Test;
+use App\Models\Patient;
+use App\Models\Schedule;
 use App\Models\TestResults;
+use PDF;
 
-class TestResultsController extends Controller
+class ReportController extends Controller
 {
-    private $repository;
-
-    public function __construct(TestResults $testResults)
-    {
-        $this->repository = $testResults;
-    }
-
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $testResults = TestResults::all();
-        dd($testResults);     
-        return view('patients.profile', ['testResults' => $testResults]);
+        //
+    }
+   
+    public function createPDF() 
+    {
+    // retreive all records from db
+    $dadosPaciente = Patient::where('id', '=', $patient->id);
+
+    // share data to view
+    view()->share('employee',$data);
+    $pdf = PDF::loadView('pdf_view', $data);
+
+    // download PDF file with download method
+    return $pdf->stream('pdf_file.pdf');
     }
 
     /**
@@ -43,12 +52,8 @@ class TestResultsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
-        dd($request);
-
-        $this->repository->create($request->all());
-
-        return redirect()->back()->with('toast_success', 'Teste cadastrado com sucesso.');
+    {
+        //
     }
 
     /**
@@ -80,15 +85,9 @@ class TestResultsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $testResult_id = $request->idup;
-
-        $testResult = TestResults::find($testResult_id);
-
-        $testResult->update($request->all());
-
-        return redirect()->back()->with('toast_success', 'Teste editado com sucesso.');
+        //
     }
 
     /**
@@ -97,21 +96,8 @@ class TestResultsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        if (session()->get('user_code') != 'S1') {
-
-            $testResult_id = $request->iddel;
-
-            $testResult = TestResults::find($testResult_id);
-            
-            $testResult->delete();
-            
-            return redirect()->back()->with('toast_success','Teste deletado com sucesso.');
-
-        } else {
-
-            return redirect()->back()->with('toast_error', 'Não possui permissão para deletar testes!');
-        }
+        //
     }
 }
