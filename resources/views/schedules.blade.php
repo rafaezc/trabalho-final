@@ -38,7 +38,6 @@
                     <tbody>
                         @foreach ($schedules as $schedule)
                         <tr>
-                            <!-- perfil do paciente(configurar relatorio) -->
                             <td hidden name="id" class="id">{{ $schedule['id'] }}</td>
                             @foreach ($patientnames as $patientname) 
                                 @if ($schedule['paciente_id'] == $patientname['id'])

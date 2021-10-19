@@ -1,4 +1,3 @@
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> --}}
 <nav class="mb-5 navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="/welcome">
         SMARP
@@ -37,7 +36,6 @@
             </li>
             <li class="nav-item ml-2">
                 <a class="nav-link" href="{{ route('login.logout') }}">{{ "(". session()->get('user_name') . ")" . " Sair" }}</a>
-                {{-- {{ "(". session()->get('user_name') .")" . "Sair" }} --}}
             </li>
         </ul>
     </div>

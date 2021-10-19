@@ -59,7 +59,6 @@
             } else {
                 var url = window.location.pathname.slice(0, -1).replace("/", ""); 
             }
-            console.log(url);
             var xcv = document?.getElementById("xcv");
             var table = document?.getElementById(url + "-data"); 
             var rows = table?.getElementsByTagName("tr");
@@ -69,7 +68,6 @@
             var buttonDetails = [];
             var editForm = document?.getElementById("edit-form");
             var addForm = document?.getElementById("add-form");
-            console.log(editForm);
             var inputEditValues = editForm?.getElementsByTagName("input");
             var textareaEditValues = editForm?.getElementsByTagName("textarea");
             var selectedEditValues = editForm?.getElementsByTagName("select");
@@ -79,9 +77,7 @@
             var userToDel = document?.getElementById("iddel");
             var nameToDel = document?.getElementById("delete-" + url +"name-warning");
             var openProfile = document?.getElementById("open-btn");
-            console.log(openProfile);
 
-            console.log(url);
             if (url !== 'logi') {
                 xcv.classList.remove("login-background");
                 xcv.classList.add("login-background-card");
@@ -127,7 +123,6 @@
                                 if (url === "test" && rowInfo.length > 3) {
                                     userToUp.setAttribute("value", rowInfo[0]);
                                     userToDel.setAttribute("value", rowInfo[0]);
-                                    console.log(rowInfo);
                                     nameFixer(rowInfo[1]);
                                     sendInputs(rowInfo);
                                     textareaEditValues[0].innerHTML = rowInfo[2];
@@ -159,7 +154,6 @@
                                 if (url === "test" && rowInfo.length > 3) {
                                     userToUp.setAttribute("value", rowInfo[0]);
                                     userToDel.setAttribute("value", rowInfo[0]);
-                                    console.log(rowInfo);
                                     nameFixer(rowInfo[1]); 
                                     sendInputs(rowInfo);
                                     textareaEditValues[0].innerHTML = rowInfo[2]; 
@@ -194,7 +188,6 @@
                     }
                 }
                 row.classList.add("active");
-                console.log(rowInfo); 
             }
 
             function changeDropOne() {
@@ -270,12 +263,9 @@
                     }
                 }
                 if (url === "schedule") {
-                    console.log(selectedEditValues[0][1].innerHTML, value1, value2);
                     for(var p = 0; p < selectedEditValues[0].length; p++) {
                         if (selectedEditValues[0][p].innerHTML === value1) {
-                            console.log(p);
                             $(".select-filter").val(p).change(); 
-                            // selectedEditValues[0][p].setAttribute("selected", "");
                         }
                     }   
                     for(var q = 0; q < selectedEditValues[1].length; q++) {
@@ -288,7 +278,6 @@
             }    
 
             function sendInputs(values) {
-                console.log(values, inputEditValues);
                 if (url === "user") {
                     for(var r = 2; r < inputEditValues.length - 3; r++) {
                         if (r === 4) {
@@ -308,12 +297,9 @@
                     }  
                 }
                 if (url === "schedule") {
-                    console.log(values);
                     var dataRev = values[3].split(" ");
                     var dataMod = dataRev[0].split("/").reverse().join("-");
-                    
                     var dataFormat = dataMod + "T" + dataRev[1];
-                    console.log(dataFormat);
                     inputEditValues[2].setAttribute("value", dataFormat);
                 }
             }
@@ -338,19 +324,14 @@
             }    
 
             function setHref(id) {
-                console.log(openProfile);
-                console.log(id);
                 if (url === "patient") {
                     const link = "{{ route('patients.show', 'id') }}";
                     let mod = link.replace("id", id);
-                    console.log("link", mod)
                     openProfile.setAttribute("href", mod);
                 }
-                console.log(openProfile);
             }
 
             function changeFieldOne($event) {
-                console.log(event);
                 switch (event.target.value) {
                     case "P1":
                         selectedAddValues[1].removeAttribute("disabled");
@@ -372,7 +353,6 @@
             }
 
             function changeFieldTwo($event) {
-                console.log(event);
                 switch (event.target.value) {
                     case "CRM":
                         selectedAddValues[1].removeAttribute("disabled");
@@ -392,8 +372,6 @@
                         break;
                 }
             }
-            //--- rancar os logs
-            //--- jogar para um arquivo separado quando terminar de mexer no script
         </script>
     </body>
 </html>
